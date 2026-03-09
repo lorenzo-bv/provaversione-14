@@ -1,0 +1,3038 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cruscotto Gestionale — Studio Odontoiatrico</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f0f4f8;--bg2:#e8eef5;--surface:#fff;--surface2:#f5f8fc;
+  --border:#dce6f0;--border2:#c8d8ea;
+  --teal:#2a9d8f;--teal-light:#e0f2f0;--teal-mid:#b2ddd9;--teal-dark:#1f7a6e;
+  --blue:#4a90c4;--blue-light:#e3f0fa;
+  --sky:#56b4d3;--sky-light:#e2f4f9;
+  --green:#52b788;--green-light:#e0f5eb;
+  --amber:#e9a84c;--amber-light:#fdf3e3;
+  --red:#e07070;--red-light:#fdeaea;
+  --purple:#9b72cf;--purple-light:#f0eafa;
+  --text:#1a2e3d;--text2:#4a6278;--text3:#8aa4b8;
+  --shadow:0 2px 12px rgba(42,100,140,.08);
+  --shadow-md:0 4px 24px rgba(42,100,140,.12);
+  --radius:14px;--radius-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:400;min-height:100vh;}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 36px;height:66px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
+.logo-wrap{display:flex;align-items:center;gap:12px;}
+.logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--sky));display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;}
+.logo-text{font-family:'Nunito',sans-serif;font-size:18px;font-weight:700;color:var(--text);}
+.logo-sub{font-size:12px;color:var(--text3);}
+.header-right{display:flex;align-items:center;gap:10px;}
+.hbtn{border:1.5px solid var(--border2);background:var(--surface2);color:var(--text2);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:7px 14px;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;}
+.hbtn:hover{background:var(--teal);color:#fff;border-color:var(--teal);}
+.hbtn.primary{background:var(--teal-light);border-color:var(--teal-mid);color:var(--teal-dark);}
+.hbtn.primary:hover{background:var(--teal);color:#fff;}
+.period-input{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:6px 12px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none;width:120px;transition:border-color .2s;}
+.period-input:focus{border-color:var(--teal);}
+
+/* NAV */
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 36px;display:flex;gap:2px;overflow-x:auto;}
+.nav-tab{padding:13px 18px;font-size:13px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;user-select:none;white-space:nowrap;}
+.nav-tab:hover{color:var(--teal);}
+.nav-tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+
+main{padding:28px 36px;}
+.section{display:none;}
+.section.active{display:block;}
+.section-title{font-family:'Nunito',sans-serif;font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.section-sub{font-size:13px;color:var(--text3);margin-bottom:24px;}
+
+/* STUDIO INFO BAR */
+.studio-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:20px;box-shadow:var(--shadow);}
+.studio-bar-field{display:flex;flex-direction:column;gap:3px;flex:1;}
+.studio-bar-lbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);}
+.studio-bar input{background:transparent;border:none;border-bottom:1.5px dashed var(--teal-mid);outline:none;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--text);padding:2px 0;transition:border-color .2s;width:100%;}
+.studio-bar input:focus{border-bottom-color:var(--teal);background:var(--teal-light);border-radius:3px;padding:2px 4px;}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.kpi-row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.kpi-card{background:var(--surface);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border);transition:box-shadow .2s,transform .2s;}
+.kpi-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.kpi-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px;}
+.kpi-icon.teal{background:var(--teal-light);}
+.kpi-icon.blue{background:var(--blue-light);}
+.kpi-icon.green{background:var(--green-light);}
+.kpi-icon.amber{background:var(--amber-light);}
+.kpi-icon.red{background:var(--red-light);}
+.kpi-icon.sky{background:var(--sky-light);}
+.kpi-icon.purple{background:var(--purple-light);}
+.kpi-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:5px;}
+.kpi-val-wrap{display:flex;align-items:baseline;gap:4px;margin-bottom:8px;}
+.kpi-prefix{font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;color:var(--text2);}
+.kpi-val{font-family:'Nunito',sans-serif;font-size:26px;font-weight:800;color:var(--text);line-height:1;}
+.num-input{font-family:'Nunito',sans-serif;font-size:26px;font-weight:800;color:var(--text);background:transparent;border:none;outline:none;width:100%;border-bottom:2px dashed var(--teal-mid);transition:border-color .2s;padding:0;line-height:1;}
+.num-input:focus{border-bottom-color:var(--teal);background:var(--teal-light);border-radius:4px;padding:0 4px;}
+.kpi-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;}
+.kpi-badge.up{background:var(--green-light);color:var(--green);}
+.kpi-badge.down{background:var(--red-light);color:var(--red);}
+.kpi-badge.neutral{background:var(--teal-light);color:var(--teal);}
+.kpi-badge.amber{background:var(--amber-light);color:var(--amber);}
+
+/* GRIDS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
+.grid-3-1{display:grid;grid-template-columns:5fr 3fr;gap:14px;margin-bottom:14px;}
+
+/* PANEL */
+.panel{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
+.panel-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface2);}
+.panel-title{font-size:13px;font-weight:600;color:var(--text2);}
+.panel-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--teal-light);color:var(--teal);border:1px solid var(--teal-mid);}
+.panel-body{padding:18px 20px;}
+
+/* EDITABLE */
+[contenteditable="true"]{border-radius:4px;padding:1px 5px;margin:-1px -5px;background:rgba(42,157,143,.06);outline:1.5px dashed var(--teal-mid);cursor:text;transition:background .15s;display:inline-block;min-width:20px;}
+[contenteditable="true"]:focus{outline:2px solid var(--teal);background:rgba(42,157,143,.12);}
+[contenteditable="true"]:hover{background:rgba(42,157,143,.09);}
+
+/* BAR CHART */
+.bar-chart{display:flex;flex-direction:column;gap:12px;}
+.bar-row{display:flex;align-items:center;gap:10px;}
+.bar-label{font-size:12px;color:var(--text2);width:160px;flex-shrink:0;font-weight:500;}
+.bar-track{flex:1;height:8px;background:var(--bg2);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width .7s cubic-bezier(.4,0,.2,1);}
+.bar-val{font-size:12px;font-weight:600;color:var(--text2);width:90px;text-align:right;flex-shrink:0;}
+.bar-pct{font-size:11px;color:var(--text3);width:40px;text-align:right;flex-shrink:0;}
+
+/* CE */
+.ce-section-header{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--teal);padding:6px 12px;border-radius:6px;margin:14px 0 6px;}
+.ce-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:6px;gap:10px;transition:background .15s;}
+.ce-row:hover{background:var(--surface2);}
+.ce-row.subtotal{background:var(--teal-light);border:1px solid var(--teal-mid);margin:8px 0 4px;border-radius:8px;}
+.ce-row.subtotal-ebitda{background:var(--green-light);border:1px solid #a8dfc0;margin:8px 0 4px;border-radius:8px;}
+.ce-row.subtotal-ebit{background:var(--blue-light);border:1px solid #a8cde8;margin:8px 0 4px;border-radius:8px;}
+.ce-row.total-utile{background:linear-gradient(135deg,var(--teal-light),var(--sky-light));border:2px solid var(--teal-mid);margin:10px 0 4px;border-radius:10px;}
+.ce-key{font-size:13px;color:var(--text2);flex:1;}
+.ce-val{font-size:13px;font-weight:700;text-align:right;min-width:120px;}
+.ce-row.subtotal .ce-key,.ce-row.subtotal-ebitda .ce-key,.ce-row.subtotal-ebit .ce-key{font-weight:700;color:var(--text);}
+.ce-row.subtotal .ce-val,.ce-row.subtotal-ebitda .ce-val,.ce-row.subtotal-ebit .ce-val,.ce-row.total-utile .ce-val{font-size:15px;font-family:'Nunito',sans-serif;}
+.ce-row.total-utile .ce-key{font-size:15px;font-weight:800;color:var(--text);}
+.pos{color:var(--teal-dark);}
+.neg{color:var(--red);}
+
+/* SPARK Q */
+.spark-q-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px;}
+.spark-q-col{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.spark-q-bar-wrap{width:100%;height:80px;display:flex;align-items:flex-end;}
+.spark-q-bar{width:100%;border-radius:5px 5px 0 0;background:var(--teal-light);border:1px solid var(--teal-mid);transition:all .3s;}
+.spark-q-bar.current{background:var(--teal);}
+.spark-q-lbl{font-size:11px;font-weight:700;color:var(--text3);}
+.spark-q-val{font-size:11px;font-weight:700;color:var(--text2);}
+.trend-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+.trend-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-align:center;transition:all .2s;}
+.trend-card:hover{border-color:var(--teal-mid);box-shadow:var(--shadow);}
+.trend-card.active-q{border-color:var(--teal);background:var(--teal-light);}
+.trend-q{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.trend-val{font-family:'Nunito',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.trend-delta{font-size:11px;font-weight:600;padding:2px 7px;border-radius:12px;display:inline-block;}
+
+/* RINGS */
+.ring-item{display:flex;align-items:center;gap:14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;transition:all .2s;}
+.ring-item:hover{border-color:var(--teal-mid);}
+.ring-svg{transform:rotate(-90deg);flex-shrink:0;}
+.ring-bg{fill:none;stroke:var(--bg2);stroke-width:6;}
+.ring-fill{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.4,0,.2,1);}
+.ring-info{flex:1;}
+.ring-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;}
+.ring-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.ring-stat{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 8px;text-align:center;}
+.ring-stat-lbl{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:2px;}
+.ring-stat-val{font-size:12px;font-weight:700;color:var(--text);}
+
+/* COSTO POLTRONA */
+.cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.cost-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-align:center;}
+.cost-card-icon{font-size:20px;margin-bottom:6px;}
+.cost-card-lbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+.cost-card-val{font-family:'Nunito',sans-serif;font-size:22px;font-weight:800;color:var(--teal-dark);}
+.cost-card-sub{font-size:11px;color:var(--text3);margin-top:3px;}
+
+/* KPI SETTORE */
+.kpi-sector-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
+.kpi-sector-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+.ks-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.ks-val{font-family:'Nunito',sans-serif;font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.ks-sub{font-size:11px;color:var(--text3);}
+
+/* BENCHMARK */
+.bench-table{width:100%;border-collapse:collapse;}
+.bench-table th{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:10px 14px;text-align:left;border-bottom:2px solid var(--border);background:var(--surface2);}
+.bench-table th:not(:first-child){text-align:right;}
+.bench-table td{padding:11px 14px;font-size:13px;border-bottom:1px solid var(--border);}
+.bench-table td:not(:first-child){text-align:right;font-weight:600;}
+.bench-table tr:last-child td{border-bottom:none;}
+.bench-table tbody tr:hover td{background:var(--surface2);}
+.bench-ok{color:var(--green);font-weight:700;}
+.bench-warn{color:var(--amber);font-weight:700;}
+.bench-bad{color:var(--red);font-weight:700;}
+.bench-indicator{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;}
+.data-table th{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:10px 14px;text-align:left;border-bottom:2px solid var(--border);background:var(--surface2);}
+.data-table td{padding:11px 14px;font-size:13px;color:var(--text);border-bottom:1px solid var(--border);}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tbody tr:hover td{background:var(--surface2);}
+
+/* Q TABLE */
+.q-table{width:100%;border-collapse:collapse;}
+.q-table th{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:8px 12px;text-align:right;border-bottom:2px solid var(--border);background:var(--surface2);}
+.q-table th:first-child{text-align:left;}
+.q-table td{padding:9px 12px;font-size:12px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border);text-align:right;}
+.q-table td:first-child{text-align:left;color:var(--text);font-weight:500;}
+.q-table tr.subtotal-row td{background:var(--teal-light);font-weight:700;color:var(--teal-dark);}
+.q-table tr:last-child td{border-bottom:none;}
+
+/* FISCAL */
+.fisc-switch{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:10px;border:1px solid var(--border);width:fit-content;margin-bottom:20px;}
+.fisc-sw-btn{padding:8px 24px;font-size:13px;font-weight:600;border-radius:7px;cursor:pointer;border:none;background:transparent;color:var(--text3);transition:all .2s;font-family:'Outfit',sans-serif;}
+.fisc-sw-btn.active{background:var(--teal);color:#fff;box-shadow:0 2px 8px rgba(42,157,143,.3);}
+.inner-tabs{display:flex;gap:4px;margin-bottom:16px;background:var(--surface2);padding:4px;border-radius:10px;width:fit-content;border:1px solid var(--border);}
+.inner-tab{padding:7px 16px;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;border-radius:7px;transition:all .2s;}
+.inner-tab.active{background:var(--teal);color:#fff;}
+.inner-panel{display:none;}
+.inner-panel.active{display:block;}
+
+/* FIELD */
+.sim-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.field-group{display:flex;flex-direction:column;gap:5px;}
+.field-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);}
+.field-input{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none;transition:border-color .2s;width:100%;}
+.field-input:focus{border-color:var(--teal);}
+select.field-input{cursor:pointer;}
+.calc-btn{width:100%;background:linear-gradient(135deg,var(--teal),var(--sky));border:none;color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;padding:13px;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(42,157,143,.3);}
+.calc-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(42,157,143,.4);}
+
+/* SIM */
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.sim-big{font-family:'Nunito',sans-serif;font-size:36px;font-weight:800;color:var(--teal-dark);}
+.sim-metric-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
+.sim-metric-row:last-child{border-bottom:none;}
+.sim-metric-key{font-size:13px;color:var(--text2);}
+.sim-metric-val{font-size:13px;font-weight:700;}
+.result-primary{background:linear-gradient(135deg,var(--teal-light),var(--sky-light));border:1.5px solid var(--teal-mid);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px;}
+.donut-wrap{display:flex;align-items:center;justify-content:center;gap:20px;margin:8px 0;}
+.donut-legend{display:flex;flex-direction:column;gap:8px;}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* MISC */
+.add-btn{width:100%;margin-top:10px;background:transparent;border:1.5px dashed var(--border2);color:var(--text3);font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:8px;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;}
+.add-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
+.del-btn{width:22px;height:22px;border-radius:6px;background:var(--red-light);border:1px solid #f5c0c0;color:var(--red);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;line-height:1;}
+.del-btn:hover{background:var(--red);color:#fff;}
+.div{height:1px;background:var(--border);margin:12px 0;}
+.disclaimer{margin-top:20px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:11px;color:var(--text3);line-height:1.6;background:var(--surface2);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,46,61,.5);z-index:1000;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:var(--radius);padding:28px;width:520px;max-width:95vw;box-shadow:0 16px 48px rgba(26,46,61,.2);}
+.modal-title{font-family:'Nunito',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;color:var(--text);}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;}
+.modal-btn{padding:9px 20px;border-radius:var(--radius-sm);font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:1.5px solid var(--border);}
+.modal-btn.cancel{background:var(--surface2);color:var(--text2);}
+.modal-btn.confirm{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.section.active>*{animation:fadeUp .35s ease both;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--teal-mid);border-radius:3px;}
+
+@media print{
+  @page{
+    size:A4 portrait;
+    margin:14mm 12mm 14mm 12mm;
+  }
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
+  header,nav,.hbtn,.add-btn,.del-btn,.modal-overlay,
+  #studio-info-bar,.fisc-switch,.inner-tabs{display:none!important;}
+  body{background:#fff!important;font-size:11px;}
+  main{padding:0!important;}
+  .section{display:block!important;page-break-after:always;}
+  .section:last-child{page-break-after:auto;}
+  .section-title{font-size:16px!important;margin-bottom:2px!important;}
+  .section-sub{font-size:10px!important;margin-bottom:10px!important;}
+
+  /* Print header per-section */
+  .section::before{
+    content:attr(data-print-title);
+    display:block;
+    font-family:'Nunito',sans-serif;
+    font-size:10px;
+    font-weight:700;
+    color:#8aa4b8;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    border-bottom:1px solid #dce6f0;
+    padding-bottom:4px;
+    margin-bottom:10px;
+  }
+
+  /* KPI cards — 4 per row, compact */
+  .kpi-row,.kpi-row-3{display:grid!important;gap:6px!important;margin-bottom:10px!important;}
+  .kpi-row{grid-template-columns:repeat(4,1fr)!important;}
+  .kpi-row-3{grid-template-columns:repeat(3,1fr)!important;}
+  .kpi-card{padding:8px 10px!important;border:1px solid #dce6f0!important;box-shadow:none!important;break-inside:avoid;}
+  .kpi-icon{width:24px!important;height:24px!important;font-size:12px!important;margin-bottom:6px!important;}
+  .kpi-label{font-size:8px!important;margin-bottom:3px!important;}
+  .kpi-val,.num-input{font-size:16px!important;}
+  .kpi-val-wrap{margin-bottom:4px!important;}
+  .kpi-prefix{font-size:12px!important;}
+  .kpi-badge{font-size:9px!important;padding:2px 5px!important;}
+
+  /* Panels */
+  .panel{box-shadow:none!important;border:1px solid #dce6f0!important;margin-bottom:8px!important;break-inside:avoid;}
+  .panel-header{padding:8px 12px!important;background:#f5f8fc!important;}
+  .panel-title{font-size:11px!important;}
+  .panel-body{padding:10px 12px!important;}
+  .panel-badge{font-size:9px!important;}
+
+  /* Grids — stack to single column on narrow pages */
+  .grid-2,.grid-3,.grid-3-1,.sim-grid{display:block!important;}
+  .grid-2>*,.grid-3>*,.grid-3-1>*,.sim-grid>*{margin-bottom:8px!important;}
+
+  /* Bar chart */
+  .bar-chart{gap:8px!important;}
+  .bar-row{gap:6px!important;}
+  .bar-label{font-size:10px!important;width:120px!important;}
+  .bar-val{font-size:10px!important;}
+  .bar-pct{font-size:9px!important;}
+  .bar-track{height:6px!important;}
+
+  /* CE rows */
+  .ce-row{padding:5px 8px!important;}
+  .ce-key,.ce-val{font-size:11px!important;}
+  .ce-section-header{font-size:9px!important;padding:4px 8px!important;margin:8px 0 4px!important;}
+
+  /* Tables */
+  .data-table th,.data-table td,.q-table th,.q-table td,.bench-table th,.bench-table td{
+    padding:5px 8px!important;font-size:10px!important;}
+
+  /* Rings — hide SVG, show % text only */
+  .ring-svg{display:none!important;}
+  .ring-item{gap:8px!important;padding:8px!important;}
+
+  /* Spark bars */
+  .spark-q-wrap{gap:6px!important;}
+  .spark-q-bar-wrap{height:50px!important;}
+  .spark-q-lbl,.spark-q-val{font-size:9px!important;}
+  .trend-row,[style*="repeat(5"]{gap:6px!important;}
+  .trend-card{padding:8px!important;}
+  .trend-q{font-size:9px!important;}
+  .trend-val{font-size:13px!important;}
+
+  /* Cost cards */
+  .cost-grid{gap:6px!important;}
+  .cost-card{padding:8px!important;}
+  .cost-card-val{font-size:14px!important;}
+  .cost-card-lbl{font-size:8px!important;}
+
+  /* KPI sector */
+  .kpi-sector-grid{grid-template-columns:repeat(3,1fr)!important;gap:6px!important;}
+  .kpi-sector-card{padding:8px!important;}
+  .ks-val{font-size:14px!important;}
+  .ks-label,.ks-sub{font-size:9px!important;}
+
+  /* Benchmark */
+  .bench-table th,.bench-table td{font-size:10px!important;}
+
+  /* Sim result */
+  .result-primary{padding:10px 12px!important;margin-bottom:8px!important;}
+  .sim-big{font-size:22px!important;}
+  .sim-metric-row{padding:5px 0!important;}
+  .sim-metric-key,.sim-metric-val{font-size:10px!important;}
+
+  /* Studio info in print header */
+  #print-studio-header{display:block!important;}
+  
+  /* Input fields in print — show value, hide border */
+  input.num-input,input.field-input{
+    border:none!important;background:transparent!important;
+    font-weight:700;color:#1a2e3d!important;
+  }
+
+  /* Disclaimer */
+  .disclaimer{font-size:9px!important;padding:6px 8px!important;}
+
+  /* Donut SVG — keep it */
+  #donut-svg{width:100px!important;height:100px!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- MODAL STORICO -->
+<div class="modal-overlay" id="storico-modal">
+  <div class="modal">
+    <div class="modal-title">📂 Gestione Trimestri</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6">
+      Ogni volta che clicchi <strong>"Salva copia"</strong> scarichi un file HTML completo con tutti i dati di quel trimestre.<br>
+      Per recuperare un trimestre precedente, apri semplicemente il file salvato nel browser.<br>
+      Per confrontare i dati, apri entrambi i file in schede diverse del browser.
+    </p>
+    <div style="background:var(--teal-light);border:1px solid var(--teal-mid);border-radius:8px;padding:14px;font-size:12px;color:var(--teal-dark);line-height:1.7">
+      💡 <strong>Suggerimento:</strong> Crea una cartella per ogni studio e salva i file con nomi come:<br>
+      <code style="background:rgba(42,157,143,.15);padding:2px 6px;border-radius:3px">StudioRossi_Q1-2025.html</code><br>
+      <code style="background:rgba(42,157,143,.15);padding:2px 6px;border-radius:3px">StudioVerdi_Q4-2024.html</code>
+    </div>
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="modal-btn confirm" onclick="document.getElementById('storico-modal').classList.remove('open')">Capito</button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="logo-wrap">
+    <div class="logo-icon">🦷</div>
+    <div>
+      <div class="logo-text">Cruscotto Odontoiatrico</div>
+      <div class="logo-sub" id="header-studio-sub">Studio non configurato</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <input class="period-input" id="periodoInput" value="Q4 2024" oninput="syncPeriodo()">
+    <button class="hbtn" onclick="document.getElementById('nuovo-studio-modal').classList.add('open')" style="background:var(--teal);color:#fff;border-color:var(--teal)">🦷 Nuovo Studio</button>
+    <button class="hbtn" onclick="avanzaTrimestre()">⏭ Avanza Q</button>
+    <button class="hbtn" onclick="apriImport()">📥 Importa Bilancio</button>
+    <button class="hbtn" onclick="apriMapping()">⚙️ Mapping Conti</button>
+    <button class="hbtn" onclick="document.getElementById('storico-modal').classList.add('open')">📂 Storico</button>
+    <button class="hbtn" onclick="stampaPDF()">🖨 PDF</button>
+    <button class="hbtn primary" onclick="salva()">↓ Salva copia</button>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-tab active" onclick="showSection('produzione',this)">📊 Produzione</div>
+  <div class="nav-tab" onclick="showSection('costi',this)">💰 Costi & Margini</div>
+  <div class="nav-tab" onclick="showSection('benchmark',this)">📐 Benchmark</div>
+  <div class="nav-tab" onclick="showSection('fiscale',this)">📋 Fiscale</div>
+  <div class="nav-tab" onclick="showSection('marginalita',this)">🔬 Marginalità ASA</div>
+  <div class="nav-tab" onclick="showSection('simulatore',this)">🔮 Simulatore</div>
+  <div class="nav-tab" onclick="showSection('note',this)">📝 Note & Commenti</div>
+</nav>
+
+<div id="print-studio-header" style="display:none;padding:0 0 10px;border-bottom:2px solid #dce6f0;margin-bottom:12px">
+  <div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:800;color:#1a2e3d" id="ph-nome">Studio</div>
+  <div style="font-size:11px;color:#8aa4b8;margin-top:2px" id="ph-info"></div>
+</div>
+<main>
+
+<!-- STUDIO INFO BAR (visibile in tutte le sezioni tramite JS) -->
+<div class="studio-bar" id="studio-info-bar">
+  <div class="studio-bar-field">
+    <div class="studio-bar-lbl">Denominazione Studio</div>
+    <input type="text" id="s_nome" value="Studio Odontoiatrico" oninput="updateStudioHeader()">
+  </div>
+  <div class="studio-bar-field">
+    <div class="studio-bar-lbl">Partita IVA</div>
+    <input type="text" id="s_piva" value="" placeholder="IT 00000000000">
+  </div>
+  <div class="studio-bar-field" style="flex:2">
+    <div class="studio-bar-lbl">Indirizzo</div>
+    <input type="text" id="s_indirizzo" value="" placeholder="Via Roma 1, 00100 Roma (RM)">
+  </div>
+  <div class="studio-bar-field">
+    <div class="studio-bar-lbl">Forma giuridica</div>
+    <input type="text" id="s_forma" value="" placeholder="es. STP srl / Studio Ind.">
+  </div>
+</div>
+
+<!-- ═══════════ PRODUZIONE ═══════════ -->
+<div id="produzione" class="section" data-print-title="Produzione Studio" active">
+  <div class="section-title">Produzione Studio</div>
+  <div class="section-sub">Inserisci i valori assoluti — le variazioni % vengono calcolate automaticamente</div>
+
+  <div class="kpi-row">
+    <!-- Fatturato corrente -->
+    <div class="kpi-card">
+      <div class="kpi-icon teal">💶</div>
+      <div class="kpi-label">Fatturato Trimestre</div>
+      <div class="kpi-val-wrap">
+        <span class="kpi-prefix">€</span>
+        <input class="num-input" type="text" id="kpi_fat" value="144.600" oninput="calcKpiDeltas();updateBrancheTot();renderCostoPoltrona();autoUpdateSparkQ();updateRicavoOra();syncFatToRicavi();" onblur="formatNum(this)">
+      </div>
+      <span class="kpi-badge" id="kpi_fat_badge">— vs Q prec.</span>
+    </div>
+    <!-- Fatturato precedente -->
+    <div class="kpi-card">
+      <div class="kpi-icon green">📈</div>
+      <div class="kpi-label">Fatturato Trim. Precedente</div>
+      <div class="kpi-val-wrap">
+        <span class="kpi-prefix">€</span>
+        <input class="num-input" type="text" id="kpi_fat_prec" value="133.200" oninput="calcKpiDeltas();" onblur="formatNum(this)">
+      </div>
+      <span class="kpi-badge neutral">Riferimento Δ%</span>
+    </div>
+    <!-- Pazienti -->
+    <div class="kpi-card">
+      <div class="kpi-icon blue">👥</div>
+      <div class="kpi-label">Pazienti Attivi</div>
+      <div class="kpi-val-wrap">
+        <input class="num-input" type="text" id="kpi_paz" value="312" oninput="calcKpiDeltas();" onblur="formatNum(this)">
+      </div>
+      <span class="kpi-badge" id="kpi_paz_badge">— vs Q prec.</span>
+    </div>
+    <!-- Pazienti precedente -->
+    <div class="kpi-card">
+      <div class="kpi-icon sky">👥</div>
+      <div class="kpi-label">Pazienti Trim. Precedente</div>
+      <div class="kpi-val-wrap">
+        <input class="num-input" type="text" id="prec_paz" value="298" oninput="calcKpiDeltas();" onblur="formatNum(this)">
+      </div>
+      <span class="kpi-badge neutral">Riferimento Δ%</span>
+    </div>
+  </div>
+
+  <!-- BRANCHE + POLTRONE -->
+  <div class="grid-3-1">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Fatturato per Branca</span>
+        <span class="panel-badge" id="lbl_trimestre">Q4 2024</span>
+      </div>
+      <div class="panel-body">
+        <div class="bar-chart" id="branche-chart"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:2px solid var(--border2)">
+          <span style="font-size:13px;font-weight:700;color:var(--text)">Totale branche</span>
+          <span style="font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;color:var(--teal-dark)" id="branche_tot">€ 0</span>
+        </div>
+        <div style="font-size:11px;margin-top:4px;text-align:right" id="branche_diff"></div>
+        <button class="add-btn" onclick="addBranca()">+ Aggiungi branca</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Utilizzo Poltrone</span>
+        <button class="add-btn" style="width:auto;margin:0;padding:4px 12px;font-size:11px" onclick="addPoltrona()">+ Poltrona</button>
+      </div>
+      <div class="panel-body" id="poltrone-body"></div>
+    </div>
+  </div>
+
+  <!-- COSTO POLTRONA VUOTA -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">💡 Costo della Poltrona Vuota</span><span class="panel-badge">Quanto costa non lavorare</span></div>
+    <div class="panel-body">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px">Calcolato sui costi fissi del trimestre (struttura + personale) e sulle ore disponibili per poltrona. Modifica i parametri per adattarli allo studio.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+        <div class="field-group">
+          <label class="field-label">Costi fissi trimestrali (€)</label>
+          <div style="display:flex;gap:6px;align-items:center">
+            <input class="field-input" type="text" id="cp_costi_fissi" value="0" oninput="renderCostoPoltrona()" onblur="formatNum(this)" style="flex:1">
+            <button onclick="syncCostiFissiDaCE()" title="Calcola dal Conto Economico" style="background:var(--teal-light);border:1.5px solid var(--teal-mid);color:var(--teal-dark);font-size:11px;font-weight:700;padding:8px 10px;border-radius:6px;cursor:pointer;white-space:nowrap">↺ Dal CE</button>
+          </div>
+          <div style="font-size:10px;color:var(--text3);margin-top:3px">Clicca "Dal CE" per calcolare automaticamente dai dati inseriti in Costi & Margini</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Settimane lavorate</label>
+          <input class="field-input" type="number" id="cp_settimane" value="13" min="1" max="14" oninput="renderCostoPoltrona()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Ore/giorno per poltrona</label>
+          <input class="field-input" type="number" id="cp_ore_giorno" value="8" min="1" max="12" oninput="renderCostoPoltrona()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Giorni lavoro/settimana</label>
+          <input class="field-input" type="number" id="cp_giorni" value="5" min="1" max="6" oninput="renderCostoPoltrona()">
+        </div>
+      </div>
+      <div class="cost-grid" id="costo-poltrona-output"></div>
+    </div>
+  </div>
+
+  <!-- ANDAMENTO TRIMESTRALE -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Andamento Trimestrale — Fatturato</span></div>
+    <div class="panel-body">
+      <div class="spark-q-wrap" id="sparkQ"></div>
+      <div class="div"></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px" id="sparkQInputs"></div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px" id="trendRow"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ COSTI ═══════════ -->
+<div id="costi" class="section" data-print-title="Costi & Margini"">
+  <div class="section-title">Costi & Margini</div>
+  <div class="section-sub">Conto economico riclassificato — modifica i valori, i subtotali si aggiornano automaticamente</div>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-icon teal">📈</div>
+      <div class="kpi-label">Valore Aggiunto</div>
+      <div class="kpi-val">€ <span id="kpi_va">—</span></div>
+      <span class="kpi-badge up" id="kpi_va_pct">—</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon green">⚡</div>
+      <div class="kpi-label">EBITDA</div>
+      <div class="kpi-val">€ <span id="kpi_ebitda">—</span></div>
+      <span class="kpi-badge up" id="kpi_ebitda_pct">—</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon blue">🎯</div>
+      <div class="kpi-label">EBIT</div>
+      <div class="kpi-val">€ <span id="kpi_ebit">—</span></div>
+      <span class="kpi-badge neutral" id="kpi_ebit_pct">—</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon amber">👤</div>
+      <div class="kpi-label">Costo Personale</div>
+      <div class="kpi-val">€ <span id="kpi_per_kpi">—</span></div>
+      <span class="kpi-badge neutral" id="kpi_per_pct">— ricavi</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Conto Economico Riclassificato</span><span class="panel-badge">Editabile</span></div>
+      <div class="panel-body" id="ce-body"></div>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Incidenza Costi sui Ricavi</span></div>
+        <div class="panel-body"><div class="bar-chart" id="costi-bars"></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">EBIT / EBITDA per Trimestre</span></div>
+        <div class="panel-body">
+          <table class="q-table">
+            <thead><tr><th>Voce</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th></tr></thead>
+            <tbody id="q-compare-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI DI SETTORE -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">📐 KPI Operativi Studio</span><span class="panel-badge">Calcolati in automatico</span></div>
+    <div class="panel-body">
+      <div class="kpi-sector-grid" id="kpi-sector-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ BENCHMARK ═══════════ -->
+<div id="benchmark" class="section" data-print-title="Benchmark di Settore"">
+  <div class="section-title">Benchmark di Settore</div>
+  <div class="section-sub">Confronto tra i dati dello studio e i valori medi del settore odontoiatrico italiano</div>
+
+  <div style="background:var(--amber-light);border:1px solid var(--amber);border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:12px;color:#8a6020;line-height:1.7">
+    📌 I benchmark di riferimento sono basati su dati medi del settore odontoiatrico italiano (Rapporto ANDI, studi di settore). I valori dello studio si aggiornano automaticamente dalle sezioni Produzione e Costi & Margini.
+  </div>
+
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">Confronto Indicatori Chiave</span></div>
+    <div class="panel-body">
+      <table class="bench-table" id="bench-table">
+        <thead>
+          <tr>
+            <th>Indicatore</th>
+            <th>Benchmark settore</th>
+            <th>Il tuo studio</th>
+            <th>Scostamento</th>
+            <th>Valutazione</th>
+          </tr>
+        </thead>
+        <tbody id="bench-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">📈 Andamento indicatori per trimestre</span>
+      <span class="panel-badge">Inserisci i valori dei trimestri precedenti per confronto</span>
+    </div>
+    <div class="panel-body">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px">Il trimestre corrente si aggiorna automaticamente. Per i precedenti inserisci i valori % manualmente dai file salvati.</div>
+      <div style="overflow-x:auto">
+      <table class="bench-table" id="bench-trend-table">
+        <thead>
+          <tr>
+            <th style="text-align:left;min-width:180px">Indicatore</th>
+            <th>Q1</th><th>Q2</th><th>Q3</th><th>Q4 / corrente</th>
+            <th>Benchmark</th>
+          </tr>
+        </thead>
+        <tbody id="bench-trend-tbody"></tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ FISCALE ═══════════ -->
+<div id="fiscale" class="section" data-print-title="Area Fiscale">
+  <div class="section-title">Area Fiscale</div>
+  <div class="section-sub">Dati collegati al Conto Economico — si aggiornano automaticamente</div>
+
+  <div class="fisc-switch">
+    <button class="fisc-sw-btn active" id="sw-irpef" onclick="setFiscalRegime('irpef')">Studio Individuale / IRPEF</button>
+    <button class="fisc-sw-btn" id="sw-srl" onclick="setFiscalRegime('srl')">Società / SRL</button>
+  </div>
+
+  <!-- ── SEZIONE CUMULATIVA ── -->
+  <div class="panel" style="margin-bottom:14px">
+    <div class="panel-header">
+      <span class="panel-title">📅 Calcolo cumulativo — Periodo progressivo</span>
+      <span class="panel-badge">Aggiorna i trimestri precedenti manualmente</span>
+    </div>
+    <div class="panel-body">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px;line-height:1.6">
+        Il trimestre corrente viene letto dal Conto Economico in automatico. Per i trimestri precedenti (da file salvati), inserisci manualmente reddito/utile ante imposte e base IRAP.
+      </div>
+      <table class="q-table" id="cumul-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Trimestre</th>
+            <th>Reddito / Utile ante imp. (€)</th>
+            <th>Base IRAP (€)</th>
+            <th>Imposte (€)</th>
+            <th>Fonte</th>
+          </tr>
+        </thead>
+        <tbody id="cumul-tbody"></tbody>
+        <tfoot>
+          <tr style="background:var(--teal-light);font-weight:700">
+            <td style="padding:9px 12px;font-size:13px;color:var(--teal-dark)">TOTALE PERIODO</td>
+            <td style="padding:9px 12px;text-align:right;font-size:14px;font-family:'Nunito',sans-serif;color:var(--teal-dark)" id="cumul-tot-reddito">—</td>
+            <td style="padding:9px 12px;text-align:right;font-size:14px;font-family:'Nunito',sans-serif;color:var(--teal-dark)" id="cumul-tot-irap">—</td>
+            <td style="padding:9px 12px;text-align:right;font-size:14px;font-family:'Nunito',sans-serif;color:var(--red)" id="cumul-tot-imposte">—</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+      <div style="margin-top:14px;padding:14px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:10px">Imposte sul totale periodo</div>
+        <div id="cumul-imposte-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IRPEF -->
+  <div id="fisc-irpef-panel">
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="kpi-icon red">📊</div><div class="kpi-label">IRPEF Stimata (anno)</div><div class="kpi-val">€ <span id="kpi_irpef_stimata">—</span></div><span class="kpi-badge neutral" id="kpi_irpef_aliq">—</span></div>
+      <div class="kpi-card"><div class="kpi-icon amber">✅</div><div class="kpi-label">Acconto IRPEF Versato</div><div class="kpi-val">€ <span contenteditable="true">48.200</span></div><span class="kpi-badge up"><span contenteditable="true">Data versamento</span></span></div>
+      <div class="kpi-card"><div class="kpi-icon blue">📅</div><div class="kpi-label">Saldo IRPEF da Versare</div><div class="kpi-val">€ <span contenteditable="true">14.200</span></div><span class="kpi-badge neutral"><span contenteditable="true">Scadenza</span></span></div>
+      <div class="kpi-card"><div class="kpi-icon green">🏥</div><div class="kpi-label">Contributi ENPAM</div><div class="kpi-val">€ <span id="irpef_enpam_val">—</span></div><span class="kpi-badge neutral">Calcolato sotto</span></div>
+    </div>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Calcolo IRPEF progressiva + ENPAM</span></div>
+        <div class="panel-body">
+          <div style="background:var(--teal-light);border:1px solid var(--teal-mid);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--teal-dark)">
+            📎 Reddito imponibile letto automaticamente dal CE (Utile ante imposte × 4 per annualizzare)
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+            <div class="field-group">
+              <label class="field-label">Reddito imponibile annuo (€)</label>
+              <input class="field-input" type="text" id="irpef_reddito" value="0" oninput="calcEnpamIrpef()" onblur="formatNum(this)">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Quota B ENPAM</label>
+              <select class="field-input" id="irpef_enpam_aliq" onchange="calcEnpamIrpef()">
+                <option value="9.75" selected>9.75% (ordinaria)</option>
+                <option value="19.5">19.50% (volontaria)</option>
+              </select>
+            </div>
+          </div>
+          <div id="enpam-irpef-result"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Scadenze IRPEF</span></div>
+        <div class="panel-body">
+          <table class="data-table">
+            <thead><tr><th>Data</th><th>Adempimento</th><th>Importo</th><th></th></tr></thead>
+            <tbody id="scad-irpef-tbody">
+              <tr><td contenteditable="true">30 giu 2026</td><td contenteditable="true">IRPEF saldo + I acconto</td><td contenteditable="true">€ 0</td><td><button class="del-btn" onclick="this.closest('tr').remove()">×</button></td></tr>
+              <tr><td contenteditable="true">30 nov 2026</td><td contenteditable="true">IRPEF II acconto</td><td contenteditable="true">€ 0</td><td><button class="del-btn" onclick="this.closest('tr').remove()">×</button></td></tr>
+            </tbody>
+          </table>
+          <button class="add-btn" onclick="addScad('scad-irpef-tbody',4)">+ Aggiungi scadenza</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SRL -->
+  <div id="fisc-srl-panel" style="display:none">
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="kpi-icon red">🏢</div><div class="kpi-label">IRES (24%)</div><div class="kpi-val">€ <span id="srl_ires">—</span></div><span class="kpi-badge neutral">Su utile ante imp.</span></div>
+      <div class="kpi-card"><div class="kpi-icon amber">📊</div><div class="kpi-label">IRAP</div><div class="kpi-val">€ <span id="srl_irap">—</span></div><span class="kpi-badge neutral" id="irap_aliq_badge">Aliq. 3.9%</span></div>
+      <div class="kpi-card"><div class="kpi-icon blue">✅</div><div class="kpi-label">Acconti Versati</div>
+        <div style="font-size:13px;font-weight:700;margin:6px 0">IRES € <span contenteditable="true">0</span><br>IRAP € <span contenteditable="true">0</span></div>
+        <span class="kpi-badge up"><span contenteditable="true">Data versamento</span></span>
+      </div>
+      <div class="kpi-card"><div class="kpi-icon green">🏥</div><div class="kpi-label">ENPAM Amm.</div><div class="kpi-val">€ <span id="srl_enpam_val">—</span></div><span class="kpi-badge neutral">Calcolato sotto</span></div>
+    </div>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Calcolo IRES / IRAP</span></div>
+        <div class="panel-body">
+          <div style="background:var(--teal-light);border:1px solid var(--teal-mid);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--teal-dark)">
+            📎 Utile ante imposte e base IRAP letti automaticamente dal CE
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+            <div class="field-group"><label class="field-label">Utile ante imposte (€)</label>
+              <input class="field-input" type="text" id="srl_utile" value="0" oninput="calcSrl()" onblur="formatNum(this)"></div>
+            <div class="field-group"><label class="field-label">Base IRAP (€)</label>
+              <input class="field-input" type="text" id="srl_vp" value="0" oninput="calcSrl()" onblur="formatNum(this)"></div>
+            <div class="field-group"><label class="field-label">Aliquota IRAP</label>
+              <select class="field-input" id="irap_aliq" onchange="calcSrl();syncFiscaleFromCE()">
+                <option value="3.9" selected>3.90% (ordinaria)</option>
+                <option value="4.82">4.82% (maggiorata)</option>
+              </select>
+            </div>
+          </div>
+          <div id="srl-fiscale-result"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Calcolo ENPAM — SRL</span></div>
+        <div class="panel-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+            <div class="field-group"><label class="field-label">Compenso amministratore (€) <span style="font-size:10px;color:var(--teal-dark)">(dal CE)</span></label>
+              <input class="field-input" type="text" id="srl_comp_amm" value="0" oninput="calcEnpamSrl()" onblur="formatNum(this)"></div>
+            <div class="field-group"><label class="field-label">Quota A ENPAM (€)</label>
+              <input class="field-input" type="text" id="srl_quota_a" value="2.640" oninput="calcEnpamSrl()" onblur="formatNum(this)" placeholder="es. 2640">
+            </div>
+            <div class="field-group"><label class="field-label">Aliquota ENPAM Quota B</label>
+              <select class="field-input" id="srl_enpam_aliq" onchange="calcEnpamSrl()">
+                <option value="9.75" selected>9.75% (ordinaria)</option>
+                <option value="19.5">19.50% (volontaria)</option>
+              </select>
+            </div>
+            <div class="field-group"><label class="field-label">Base calcolo ENPAM</label>
+              <select class="field-input" id="srl_enpam_base" onchange="calcEnpamSrl()">
+                <option value="compenso">Solo compenso amm.</option>
+                <option value="utile_comp" selected>Utile post-imp. + compenso</option>
+              </select>
+            </div>
+          </div>
+          <div id="srl-enpam-result"></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Scadenze SRL</span></div>
+      <div class="panel-body">
+        <table class="data-table">
+          <thead><tr><th>Data</th><th>Adempimento</th><th>IRES</th><th>IRAP</th><th>Note</th><th></th></tr></thead>
+          <tbody id="scad-srl-tbody">
+            <tr><td contenteditable="true">30 giu 2026</td><td contenteditable="true">Saldo + I acconto</td><td contenteditable="true">€ 0</td><td contenteditable="true">€ 0</td><td contenteditable="true">F24</td><td><button class="del-btn" onclick="this.closest('tr').remove()">×</button></td></tr>
+            <tr><td contenteditable="true">30 nov 2026</td><td contenteditable="true">II acconto</td><td contenteditable="true">€ 0</td><td contenteditable="true">€ 0</td><td contenteditable="true">F24</td><td><button class="del-btn" onclick="this.closest('tr').remove()">×</button></td></tr>
+          </tbody>
+        </table>
+        <button class="add-btn" onclick="addScadSrl()">+ Aggiungi scadenza</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════ MARGINALITÀ ASA ═══════════ -->
+<div id="marginalita" class="section" data-print-title="Marginalità per ASA">
+  <div class="section-title">Marginalità per Area di Attività (ASA)</div>
+  <div class="section-sub">Analisi di redditività per singola branca — margine di contribuzione e margine netto</div>
+
+  <div style="background:var(--teal-light);border:1px solid var(--teal-mid);border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:12px;color:var(--teal-dark);line-height:1.7">
+    📎 <strong>Ricavi</strong> letti automaticamente dalla sezione Produzione (branche). &nbsp;
+    📎 <strong>Costi fissi</strong> ripartiti dal CE (beni di terzi + ammortamenti + servizi) in proporzione al fatturato di ogni ASA. &nbsp;
+    📎 Inserisci materiali e collaboratori per ogni branca.
+  </div>
+
+  <!-- Configurazione costi fissi -->
+  <div class="panel" style="margin-bottom:14px">
+    <div class="panel-header"><span class="panel-title">⚙️ Costi fissi da ripartire</span></div>
+    <div class="panel-body">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:end">
+        <div class="field-group">
+          <label class="field-label">Affitto / Godimento beni di terzi (€) <span style="color:var(--teal-dark);font-size:10px">(dal CE)</span></label>
+          <input class="field-input" type="text" id="asa_fissi_affitto" value="0" onblur="formatNum(this)" oninput="renderASA()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Ammortamenti (€) <span style="color:var(--teal-dark);font-size:10px">(dal CE)</span></label>
+          <input class="field-input" type="text" id="asa_fissi_amm" value="0" onblur="formatNum(this)" oninput="renderASA()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Quota utenze / Servizi (€) <span style="color:var(--teal-dark);font-size:10px">(dal CE)</span></label>
+          <input class="field-input" type="text" id="asa_fissi_utenze" value="0" onblur="formatNum(this)" oninput="renderASA()">
+        </div>
+      </div>
+      <div style="margin-top:10px;font-size:12px;color:var(--text3)">Totale fissi da ripartire: <strong id="asa_fissi_tot" style="color:var(--text)">€ 0</strong> — ripartiti in proporzione al fatturato di ogni ASA</div>
+    </div>
+  </div>
+
+  <!-- Tabella ASA -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">📊 Dettaglio per ASA</span></div>
+    <div class="panel-body" style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;min-width:900px" id="asa-table">
+        <thead>
+          <tr style="background:var(--surface2)">
+            <th style="padding:10px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);border-bottom:2px solid var(--border)">ASA</th>
+            <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);border-bottom:2px solid var(--border)">Ricavi (€)</th>
+            <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);border-bottom:2px solid var(--border)">Materiali</th>
+            <th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);border-bottom:2px solid var(--border)">Collaboratore</th>
+            <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal-dark);border-bottom:2px solid var(--border)">MDC (€)</th>
+            <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);border-bottom:2px solid var(--border)">MDC %</th>
+            <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);border-bottom:2px solid var(--border)">Quota fissi (€)</th>
+            <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--blue);border-bottom:2px solid var(--border)">Margine netto (€)</th>
+            <th style="padding:10px 12px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);border-bottom:2px solid var(--border)">Marg. %</th>
+          </tr>
+        </thead>
+        <tbody id="asa-tbody"></tbody>
+        <tfoot id="asa-tfoot"></tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- Riepilogo grafico -->
+  <div class="grid-2" style="margin-top:14px">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Margine di contribuzione per ASA</span></div>
+      <div class="panel-body"><div class="bar-chart" id="asa-mdc-bars"></div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">Margine netto per ASA</span></div>
+      <div class="panel-body"><div class="bar-chart" id="asa-netto-bars"></div></div>
+    </div>
+  </div>
+
+  <!-- Insight automatico -->
+  <div id="asa-insight" style="margin-top:14px"></div>
+</div>
+
+
+<!-- ═══════════ NOTE & COMMENTI ═══════════ -->
+<div id="note" class="section" data-print-title="Note e Commenti del Commercialista">
+  <div class="section-title">📝 Note & Commenti</div>
+  <div class="section-sub">Osservazioni, interpretazioni e raccomandazioni — incluse nel PDF di stampa</div>
+
+  <!-- Intestazione documento -->
+  <div class="panel" style="margin-bottom:14px">
+    <div class="panel-header"><span class="panel-title">Intestazione relazione</span></div>
+    <div class="panel-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div class="field-group">
+          <label class="field-label">Redatto da</label>
+          <input class="field-input" type="text" id="note_autore" placeholder="Nome commercialista / Studio">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Data relazione</label>
+          <input class="field-input" type="date" id="note_data">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Destinatario</label>
+          <input class="field-input" type="text" id="note_dest" placeholder="es. Dott. Rossi">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Semaforo per area + commento -->
+  <div class="panel" style="margin-bottom:14px">
+    <div class="panel-header"><span class="panel-title">Valutazione per area</span></div>
+    <div class="panel-body">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px">Per ogni area assegna un giudizio sintetico e inserisci il commento specifico.</div>
+      <div id="note-aree-grid" style="display:flex;flex-direction:column;gap:12px"></div>
+    </div>
+  </div>
+
+  <!-- Commento generale -->
+  <div class="panel" style="margin-bottom:14px">
+    <div class="panel-header"><span class="panel-title">📋 Commento generale e raccomandazioni</span></div>
+    <div class="panel-body">
+      <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap" id="note-toolbar">
+        <button onclick="noteFmt('bold')" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer">B</button>
+        <button onclick="noteFmt('italic')" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:5px 10px;font-size:12px;font-style:italic;cursor:pointer">I</button>
+        <button onclick="noteInsert('\n• ')" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:5px 10px;font-size:12px;cursor:pointer">• Lista</button>
+        <button onclick="noteInsert('\n✅ ')" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:5px 10px;font-size:12px;cursor:pointer">✅ Positivo</button>
+        <button onclick="noteInsert('\n⚠️ ')" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:5px 10px;font-size:12px;cursor:pointer">⚠️ Attenzione</button>
+        <button onclick="noteInsert('\n🔴 ')" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:5px 10px;font-size:12px;cursor:pointer">🔴 Critico</button>
+        <button onclick="noteInsert('\n📌 Raccomandazione: ')" style="background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:5px 10px;font-size:12px;cursor:pointer">📌 Raccomandazione</button>
+      </div>
+      <div id="note-generale" contenteditable="true"
+        style="min-height:160px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:14px;font-size:13px;line-height:1.8;color:var(--text);outline:none;font-family:'Outfit',sans-serif"
+        onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border)'"
+        placeholder="Scrivi qui il commento generale, le osservazioni sui dati e le raccomandazioni al cliente...">
+      </div>
+    </div>
+  </div>
+
+  <!-- Riepilogo KPI automatico con commento -->
+  <div class="panel" style="margin-bottom:14px">
+    <div class="panel-header"><span class="panel-title">&#x1F4CA; Riepilogo KPI con spazio commento</span></div>
+    <div class="panel-body">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px">I valori sono letti automaticamente dal cruscotto. Aggiungi il commento per ogni indicatore.</div>
+      <div id="note-kpi-grid" style="display:flex;flex-direction:column;gap:10px"></div>
+    </div>
+  </div>
+
+  <!-- Riepilogo imposte -->
+  <div class="panel">
+    <div class="panel-header"><span class="panel-title">&#x1F9FE; Riepilogo imposte del periodo</span></div>
+    <div class="panel-body">
+      <div id="note-imposte-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SIMULATORE ═══════════ -->
+<div id="simulatore" class="section" data-print-title="Simulatore Gestionale"">
+  <div class="section-title">Simulatore Gestionale</div>
+  <div class="section-sub">Proiezione redditività annua — il calcolo fiscale si adatta al regime selezionato</div>
+  <div class="sim-grid">
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">⚙️ Parametri</span></div>
+      <div class="panel-body">
+        <div class="sim-inputs">
+          <div class="field-group" style="grid-column:1/-1">
+            <label class="field-label">Regime fiscale</label>
+            <select class="field-input" id="s_reg" onchange="calcola()">
+              <option value="irpef" selected>Studio Individuale — IRPEF a scaglioni</option>
+              <option value="srl">Società — IRES 24% + IRAP 3.9%</option>
+            </select>
+          </div>
+          <div class="field-group"><label class="field-label">Fatturato annuo €</label><input class="field-input" type="text" id="s_fat" value="580.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Materiali odontoiatrici €</label><input class="field-input" type="text" id="s_mat" value="70.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Materiali di consumo €</label><input class="field-input" type="text" id="s_matc" value="15.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Costi per servizi €</label><input class="field-input" type="text" id="s_ser" value="40.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Compenso amm./titolare €</label><input class="field-input" type="text" id="s_comp" value="60.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Godimento beni di terzi €</label><input class="field-input" type="text" id="s_beni" value="35.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Altri oneri di gestione €</label><input class="field-input" type="text" id="s_oneri" value="8.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Costo del personale €</label><input class="field-input" type="text" id="s_per" value="150.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Ammortamenti €</label><input class="field-input" type="text" id="s_amm" value="28.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Svalut./Accantonamenti €</label><input class="field-input" type="text" id="s_sval" value="5.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Gestione finanziaria €</label><input class="field-input" type="text" id="s_fin" value="3.000" oninput="calcola()" onblur="formatNum(this)"></div>
+          <div class="field-group"><label class="field-label">Contributi ENPAM €</label><input class="field-input" type="text" id="s_enp" value="22.000" oninput="calcola()" onblur="formatNum(this)"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="result-primary">
+        <div style="font-size:12px;font-weight:700;color:var(--text3);letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px">Reddito / Utile netto disponibile</div>
+        <div class="sim-big" id="sim-big">—</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px" id="sim-regime-lbl">—</div>
+        <div class="div"></div>
+        <div id="sim-metrics"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Composizione Fatturato</span></div>
+        <div class="panel-body"><div class="donut-wrap"><svg id="donut-svg" width="140" height="140" viewBox="0 0 140 140"></svg><div class="donut-legend" id="donut-legend"></div></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Dettaglio Scaglioni IRPEF</span></div>
+        <div class="panel-body" id="scaglioni-panel"><div style="font-size:12px;color:var(--text3);text-align:center;padding:10px">Seleziona regime IRPEF</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="disclaimer">⚠ Strumento indicativo. Non costituisce consulenza professionale. Per valutazioni definitive consultare il proprio commercialista.</div>
+</div>
+
+</main>
+
+<script>
+// ═══ STATE ═══
+let branche=[
+  {label:'Implantologia',val:48200,color:'#2a9d8f'},
+  {label:'Ortodonzia',val:37400,color:'#56b4d3'},
+  {label:'Conservativa',val:28600,color:'#4a90c4'},
+  {label:'Protesi',val:18400,color:'#52b788'},
+  {label:'Igiene / Prevenzione',val:8200,color:'#9b72cf'},
+  {label:'Endodonzia',val:3800,color:'#c8d8ea'},
+];
+let poltrone=[
+  {nome:'Poltrona 1',pct:72,ore:38,valOra:142},
+  {nome:'Poltrona 2',pct:67,ore:36,valOra:138},
+];
+let sparkQ=[112400,125800,133200,144600];
+const qLabels=['Q1','Q2','Q3','Q4'];
+let ceVoci=[
+  {group:'ricavi',   label:'Ricavi da prestazioni',              val:580000,  ricavo:true},
+  {group:'mat',      label:'Costi materiali odontoiatrici',      val:-70000,  ricavo:false},
+  {group:'matc',     label:'Costi materiali di consumo',         val:-15000,  ricavo:false},
+  {group:'ser',      label:'Costi per servizi',                  val:-45000,  ricavo:false},
+  {group:'comp',     label:'Compenso amministratori/titolare',   val:-60000,  ricavo:false},
+  {group:'beni',     label:'Godimento beni di terzi',            val:-35000,  ricavo:false},
+  {group:'oneri',    label:'Altri oneri di gestione',            val:-8000,   ricavo:false},
+  {group:'per',      label:'Costo del personale',                val:-150000, ricavo:false},
+  {group:'amm',      label:'Ammortamenti',                       val:-28000,  ricavo:false},
+  {group:'sval',     label:'Svalutazioni e accantonamenti',      val:-5000,   ricavo:false},
+  {group:'provfin',  label:'Proventi finanziari',                val:0,       ricavo:true},
+  {group:'onfin',    label:'Oneri finanziari',                    val:-3000,   ricavo:false},
+  {group:'imposte',  label:'Imposte sul reddito',                val:0,       ricavo:false},
+];
+let qCompare={ebitda:[18400,22100,24800,0],ebit:[14200,18600,21400,0]};
+let fiscalRegime='irpef';
+
+
+// ═══ MARGINALITÀ ASA ═══
+let asaList=[
+  {id:'igiene',     label:'Igiene',            color:'#2a9d8f'},
+  {id:'conserv',    label:'Conservativa/Carie', color:'#4a90c4'},
+  {id:'endo',       label:'Endodonzia',         color:'#56b4d3'},
+  {id:'chirurgia',  label:'Chirurgia orale',    color:'#9b72cf'},
+  {id:'orto',       label:'Ortodonzia',         color:'#e9a84c'},
+  {id:'protesi',    label:'Protesi',            color:'#52b788'},
+  {id:'implanto',   label:'Implantologia',      color:'#e07070'},
+  {id:'pedo',       label:'Pedodonzia',         color:'#8aa4b8'},
+];
+// Per ogni ASA: { mat: importo o %, matMode:'imp'|'pct', collab: importo o %, collabMode:'imp'|'pct' }
+let asaData={};
+asaList.forEach(a=>{
+  asaData[a.id]={mat:0,matMode:'imp',collab:0,collabMode:'imp'};
+});
+
+
+// ═══ NOTE & COMMENTI ═══
+let noteAree={
+  produzione:{semaforo:'verde', testo:''},
+  costi:     {semaforo:'verde', testo:''},
+  fiscale:   {semaforo:'verde', testo:''},
+  asa:       {semaforo:'verde', testo:''},
+  generale:  {semaforo:'verde', testo:''},
+};
+
+// ═══ FORMAT ═══
+function parseNum(s){return parseFloat((s||'0').replace(/\./g,'').replace(',','.'))||0;}
+function fmtNum(n){return Math.round(n).toLocaleString('it-IT');}
+function formatNum(input){
+  // Called on blur - formats the number with thousand separators
+  const raw=input.value.replace(/[^\d]/g,'');
+  if(!raw){input.value='0';return;}
+  const n=parseInt(raw,10);
+  input.value=n.toLocaleString('it-IT');
+}
+function formatNumInput(input){
+  // Called on input - only strips non-numeric chars, no cursor manipulation
+  // This allows free typing; formatting happens on blur
+}
+
+
+// ═══ AUTO UPDATE SPARKQ FROM KPI_FAT ═══
+function autoUpdateSparkQ(){
+  const fat=parseNum(document.getElementById('kpi_fat').value);
+  // Find which quarter we're on based on periodo label
+  const periodo=document.getElementById('periodoInput').value;
+  const match=periodo.match(/Q(\d)/);
+  const qIdx=match?parseInt(match[1])-1:3;
+  sparkQ[qIdx]=fat;
+  renderSparkQ();
+}
+
+
+
+function syncCostiFissiDaCE(){
+  // Costi fissi = servizi + personale + godimento beni di terzi + ammortamenti + svalutazioni
+  const g=(group)=>ceVoci.find(v=>v.group===group)||{val:0};
+  const fissi=Math.abs(g('ser').val)+Math.abs(g('per').val)+Math.abs(g('beni').val)+
+               Math.abs(g('amm').val)+Math.abs(g('sval').val);
+  document.getElementById('cp_costi_fissi').value=fmtNum(fissi);
+  renderCostoPoltrona();
+}
+
+function updateRicavoOra(){
+  const fat=parseNum(document.getElementById('kpi_fat').value);
+  const sett=parseFloat(document.getElementById('cp_settimane').value)||13;
+  const giorni=parseFloat(document.getElementById('cp_giorni').value)||5;
+  document.querySelectorAll('[data-ricavo-idx]').forEach(el=>{
+    const i=parseInt(el.getAttribute('data-ricavo-idx'));
+    const p=poltrone[i];if(!p)return;
+    const oreTrimestrali=p.ore*sett*giorni;
+    const ricavoOra=oreTrimestrali>0?(fat/Math.max(poltrone.length,1))/oreTrimestrali:0;
+    el.textContent='€ '+Math.round(ricavoOra);
+  });
+}
+
+// ═══ NAV ═══
+function showSection(id,el){
+  if(id==='note'){setTimeout(initNoteSection,50);}
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+function showInner(id,el){
+  el.closest('.section').querySelectorAll('.inner-panel').forEach(p=>p.classList.remove('active'));
+  el.closest('.inner-tabs').querySelectorAll('.inner-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+function syncPeriodo(){
+  const v=document.getElementById('periodoInput').value;
+  (document.getElementById('lbl_trimestre')||{}).textContent =v;
+}
+function updateStudioHeader(){
+  const nome=document.getElementById('s_nome').value||'Studio non configurato';
+  (document.getElementById('header-studio-sub')||{}).textContent =nome;
+}
+
+// ═══ KPI DELTAS ═══
+function calcKpiDeltas(){
+  const fatC=parseNum(document.getElementById('kpi_fat').value);
+  const fatP=parseNum(document.getElementById('kpi_fat_prec').value);
+  const pazC=parseNum(document.getElementById('kpi_paz').value);
+  const pazP=parseNum(document.getElementById('prec_paz').value);
+  function badge(el,curr,prec){
+    if(!prec){el.textContent='—';el.className='kpi-badge neutral';return;}
+    const d=(curr-prec)/prec*100;
+    el.textContent=(d>=0?'↑ +':'↓ ')+Math.abs(d).toFixed(1)+'% vs Q prec.';
+    el.className='kpi-badge '+(d>=0?'up':'down');
+  }
+  badge(document.getElementById('kpi_fat_badge'),fatC,fatP);
+  badge(document.getElementById('kpi_paz_badge'),pazC,pazP);
+  updateBrancheTot();
+}
+
+// ═══ BRANCHE ═══
+function renderBranche(){
+  const c=document.getElementById('branche-chart');if(!c)return;c.innerHTML='';
+  const mx=Math.max(...branche.map(b=>b.val),1);
+  const tot=branche.reduce((s,b)=>s+b.val,0);
+  branche.forEach((b,i)=>{
+    const pct=(b.val/mx*100).toFixed(0);
+    const share=tot>0?(b.val/tot*100).toFixed(1):'0.0';
+    const row=document.createElement('div');row.className='bar-row';
+    row.innerHTML=`
+      <span class="bar-label" contenteditable="true" oninput="branche[${i}].label=this.textContent">${b.label}</span>
+      <div class="bar-track"><div class="bar-fill" id="bf${i}" style="width:${pct}%;background:${b.color}"></div></div>
+      <span class="bar-val" contenteditable="true" oninput="updateBranca(${i},this.textContent)">€ ${fmtNum(b.val)}</span>
+      <span class="bar-pct" id="bshare${i}">${share}%</span>
+      <button class="del-btn" onclick="delBranca(${i})">×</button>`;
+    c.appendChild(row);
+  });
+  updateBrancheTot();
+}
+function updateBranca(i,raw){
+  const clean=raw.replace(/[€\s]/g,'');
+  branche[i].val=parseNum(clean)||0;
+  // Update bar widths
+  const mx=Math.max(...branche.map(b=>b.val),1);
+  branche.forEach((b,j)=>{const el=document.getElementById('bf'+j);if(el)el.style.width=(b.val/mx*100).toFixed(0)+'%';});
+  // Update share % for all rows
+  const tot=branche.reduce((s,b)=>s+b.val,0);
+  branche.forEach((b,j)=>{
+    const el=document.getElementById('bshare'+j);
+    if(el)el.textContent=tot>0?(b.val/tot*100).toFixed(1)+'%':'0.0%';
+  });
+  updateBrancheTot();
+}
+function updateBrancheTot(){
+  const tot=branche.reduce((s,b)=>s+b.val,0);
+  (document.getElementById('branche_tot')||{}).textContent ='€ '+fmtNum(tot);
+  const fat=parseNum(document.getElementById('kpi_fat').value);
+  const diff=tot-fat;
+  const el=document.getElementById('branche_diff');
+  if(fat>0){
+    el.textContent=diff===0?'✓ Coincide con il fatturato trimestrale':
+      (diff>0?'▲ Eccesso: € '+fmtNum(Math.abs(diff)):'▼ Differenza: € '+fmtNum(Math.abs(diff)));
+    el.style.color=diff===0?'var(--green)':diff>0?'var(--amber)':'var(--red)';
+  }else el.textContent='';
+}
+function delBranca(i){branche.splice(i,1);renderBranche();}
+function addBranca(){branche.push({label:'Nuova branca',val:0,color:'#8aa4b8'});renderBranche();}
+
+// ═══ POLTRONE ═══
+function renderPoltrone(){
+  const body=document.getElementById('poltrone-body');if(!body)return;body.innerHTML='';
+  poltrone.forEach((p,i)=>{
+    const r=40,circ=2*Math.PI*r,offset=(circ-(p.pct/100)*circ).toFixed(2);
+    const col=p.pct>=80?'#52b788':p.pct>=65?'#2a9d8f':'#e9a84c';
+    const div=document.createElement('div');div.style.marginBottom='10px';div.className='ring-item';
+    div.innerHTML=`
+      <div style="text-align:center;min-width:90px">
+        <svg class="ring-svg" width="90" height="90" viewBox="0 0 90 90">
+          <circle class="ring-bg" cx="45" cy="45" r="${r}"/>
+          <circle class="ring-fill" id="ringf${i}" cx="45" cy="45" r="${r}" stroke="${col}" stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${offset}"/>
+        </svg>
+        <div style="margin-top:-2px">
+          <input type="text" value="${p.pct}%" id="rpct${i}"
+            style="width:60px;background:transparent;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:18px;font-weight:800;color:${col};text-align:center;border-bottom:1.5px dashed var(--teal-mid);cursor:text"
+            oninput="updatePoltronaPct(${i},this.value)">
+          <div style="font-size:9px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.05em">Riempimento</div>
+        </div>
+      </div>
+      <div class="ring-info">
+        <div class="ring-name" contenteditable="true" oninput="poltrone[${i}].nome=this.textContent">${p.nome}</div>
+        <div class="ring-stats" style="grid-template-columns:1fr 1fr;">
+          <div class="ring-stat">
+            <div class="ring-stat-lbl">Ore lavorate/sett.</div>
+            <div class="ring-stat-val">
+              <input type="number" value="${p.ore}" style="width:50px;background:transparent;border:none;border-bottom:1px dashed var(--teal-mid);outline:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--text);text-align:center"
+                oninput="poltrone[${i}].ore=parseFloat(this.value)||0;renderCostoPoltrona();updateRicavoOra()">
+            </div>
+          </div>
+          <div class="ring-stat">
+            <div class="ring-stat-lbl">Ricavo stimato/ora</div>
+            <div class="ring-stat-val" style="color:var(--teal-dark)" data-ricavo-idx="${i}">€ —</div>
+          </div>
+        </div>
+      </div>
+      <button class="del-btn" style="align-self:flex-start" onclick="delPoltrona(${i})">×</button>`;
+    body.appendChild(div);
+  });
+  renderCostoPoltrona();
+  // Update ricavo stimato/ora per poltrona
+  setTimeout(()=>{
+    const fat=parseNum(document.getElementById('kpi_fat').value);
+    const sett=parseFloat(document.getElementById('cp_settimane').value)||13;
+    const giorni=parseFloat(document.getElementById('cp_giorni').value)||5;
+    document.querySelectorAll('[data-ricavo-idx]').forEach(el=>{
+      const i=parseInt(el.getAttribute('data-ricavo-idx'));
+      const p=poltrone[i];if(!p)return;
+      const oreTrimestrali=p.ore*sett*giorni;
+      const ricavoOra=oreTrimestrali>0?(fat/Math.max(poltrone.length,1))/oreTrimestrali:0;
+      el.textContent='€ '+Math.round(ricavoOra);
+    });
+  },50);
+}
+function updatePoltronaPct(i,val){
+  const n=parseFloat(val)||0;poltrone[i].pct=n;
+  const r=40,circ=2*Math.PI*r,ring=document.getElementById('ringf'+i);
+  if(ring)ring.style.strokeDashoffset=(circ-(n/100)*circ).toFixed(2);
+}
+function delPoltrona(i){poltrone.splice(i,1);renderPoltrone();}
+function addPoltrona(){poltrone.push({nome:'Poltrona '+(poltrone.length+1),pct:0,ore:38,valOra:0});renderPoltrone();}
+
+// ═══ COSTO POLTRONA VUOTA ═══
+function renderCostoPoltrona(){
+  const costiFissi=parseNum(document.getElementById('cp_costi_fissi').value);
+  const sett=parseFloat(document.getElementById('cp_settimane').value)||13;
+  const oreG=parseFloat(document.getElementById('cp_ore_giorno').value)||8;
+  const giorni=parseFloat(document.getElementById('cp_giorni').value)||5;
+  const nPoltrone=poltrone.length||1;
+  const oreDisp=sett*giorni*oreG;
+  const oreDispPerPoltrona=oreDisp/nPoltrone;
+  const costoOraStruttura=costiFissi/oreDisp;
+  const costoOraPerPoltrona=costiFissi/oreDisp; // same, total / total hours
+  const fat=parseNum(document.getElementById('kpi_fat').value)*4; // annualizzato
+  const breakeven=costiFissi/fat*100;
+
+  const c=document.getElementById('costo-poltrona-output');
+  c.innerHTML=`
+    <div class="cost-card">
+      <div class="cost-card-icon">⏱</div>
+      <div class="cost-card-lbl">Costo ora vuota (struttura)</div>
+      <div class="cost-card-val">€ ${costoOraStruttura.toFixed(0)}</div>
+      <div class="cost-card-sub">per ora non prodotta</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-card-icon">🪑</div>
+      <div class="cost-card-lbl">Ore disponibili/trimestre</div>
+      <div class="cost-card-val">${fmtNum(oreDisp)}</div>
+      <div class="cost-card-sub">${nPoltrone} poltrona${nPoltrone>1?'e':''} × ${oreG}h × ${giorni}g × ${sett} sett.</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-card-icon">💸</div>
+      <div class="cost-card-lbl">Costo ora per poltrona</div>
+      <div class="cost-card-val">€ ${costoOraPerPoltrona.toFixed(0)}</div>
+      <div class="cost-card-sub">costi fissi / ore totali</div>
+    </div>`;
+}
+
+// ═══ SPARKLINE TRIMESTRALE ═══
+function renderSparkQ(){
+  const barsEl=document.getElementById('sparkQ');
+  const inpEl=document.getElementById('sparkQInputs');
+  const trendEl=document.getElementById('trendRow');
+  barsEl.innerHTML='';inpEl.innerHTML='';trendEl.innerHTML='';
+  const mx=Math.max(...sparkQ,1);
+  // Annual total
+  const totAnno=sparkQ.reduce((s,v)=>s+v,0);
+  sparkQ.forEach((v,i)=>{
+    const h=Math.max((v/mx*100),5).toFixed(0);
+    const isCurr=i===sparkQ.length-1;
+    const col=document.createElement('div');col.className='spark-q-col';
+    col.innerHTML=`<div class="spark-q-bar-wrap"><div class="spark-q-bar${isCurr?' current':''}" style="height:${h}%"></div></div>
+      <div class="spark-q-lbl">${qLabels[i]}</div><div class="spark-q-val">€ ${fmtNum(v)}</div>`;
+    barsEl.appendChild(col);
+    const inp=document.createElement('div');
+    inp.innerHTML=`<div style="font-size:10px;color:var(--text3);font-weight:700;margin-bottom:4px">${qLabels[i]} — Fatturato (€)</div>
+      <input class="field-input" type="text" value="${fmtNum(v)}" oninput="sparkQ[${i}]=parseNum(this.value);renderSparkQ()" onblur="formatNum(this)">`;
+    inpEl.appendChild(inp);
+    const prec=i>0?sparkQ[i-1]:null;
+    const delta=prec?((v-prec)/prec*100):null;
+    const card=document.createElement('div');card.className='trend-card'+(isCurr?' active-q':'');
+    card.innerHTML=`<div class="trend-q">${qLabels[i]}</div><div class="trend-val">€ ${fmtNum(v)}</div>
+      ${delta!==null?`<span class="trend-delta" style="background:${delta>=0?'var(--green-light)':'var(--red-light)'};color:${delta>=0?'var(--green)':'var(--red)'}">
+        ${delta>=0?'↑':'↓'} ${Math.abs(delta).toFixed(1)}%</span>`:'<span class="trend-delta" style="background:var(--bg2);color:var(--text3)">Inizio</span>'}`;
+    trendEl.appendChild(card);
+  });
+  // Add annual total
+  const totCard=document.createElement('div');totCard.className='trend-card';
+  totCard.style.borderColor='var(--teal)';totCard.style.background='linear-gradient(135deg,var(--teal-light),var(--sky-light))';
+  totCard.innerHTML=`<div class="trend-q" style="color:var(--teal)">TOTALE ANNO</div><div class="trend-val">€ ${fmtNum(totAnno)}</div><span class="trend-delta" style="background:var(--teal-light);color:var(--teal)">Σ Q1–Q4</span>`;
+  trendEl.appendChild(totCard);
+}
+
+// ═══ CONTO ECONOMICO ═══
+function renderCE(){
+  const body=document.getElementById('ce-body');if(!body)return;body.innerHTML='';
+  const g=(group)=>ceVoci.find(v=>v.group===group)||{val:0};
+  const ricavi=g('ricavi').val,mat=g('mat').val,matc=g('matc').val,ser=g('ser').val,
+        comp=g('comp').val,beni=g('beni').val,oneri=g('oneri').val,
+        per=g('per').val,amm=g('amm').val,sval=g('sval').val,
+        provfin=g('provfin').val,onfin=g('onfin').val,imposte=g('imposte').val;
+  const va=ricavi+mat+matc+ser+comp+beni+oneri;
+  const ebitda=va+per;
+  const ebit=ebitda+amm+sval;
+  const ebt=ebit+provfin+onfin; // Utile ante imposte
+  // Auto-calc imposte dal regime fiscale
+  const baseIrapCE=ricavi+mat+matc+ser+beni+oneri; // base IRAP = VA senza personale e comp
+  const imposteCal=calcImposteAutoce(ebt,baseIrapCE);
+  ceVoci.find(v=>v.group==='imposte').val=-imposteCal;
+  const utile=ebt-imposteCal;
+  // Write EBIT/EBITDA to correct quarter index based on current periodo
+  const _periodoQ=document.getElementById('periodoInput').value;
+  const _qMatch=_periodoQ.match(/Q(\d)/);
+  const _qIdx=_qMatch?parseInt(_qMatch[1])-1:0;
+  qCompare.ebitda[_qIdx]=ebitda;qCompare.ebit[_qIdx]=ebit;
+  // Sync sezione fiscale
+  setTimeout(syncFiscaleFromCE,50);
+
+  function hdr(lbl){const h=document.createElement('div');h.className='ce-section-header';h.textContent=lbl;body.appendChild(h);}
+  function row(group){
+    const v=ceVoci.find(x=>x.group===group);if(!v)return;
+    const idx=ceVoci.indexOf(v),pos=v.val>=0;
+    const r=document.createElement('div');r.className='ce-row';
+    r.innerHTML=`
+      <span class="ce-key" contenteditable="true" oninput="ceVoci[${idx}].label=this.textContent" style="flex:1">${v.label}</span>
+      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+        <span style="font-size:12px;font-weight:600;color:var(--text3)">${pos?'+':'–'} €</span>
+        <input type="text" value="${fmtNum(Math.abs(v.val))}"
+          style="width:110px;text-align:right;background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:4px 8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:${pos?'var(--teal-dark)':'var(--red)'};outline:none;transition:border-color .2s"
+          onfocus="this.style.borderColor='var(--teal)'"
+          onblur="this.style.borderColor='var(--border)';updateCE(${idx},this.value)"
+          oninput="updateCE(${idx},this.value)">
+      </div>`;
+    body.appendChild(r);
+  }
+  function sub(lbl,val,cls){
+    const r=document.createElement('div');r.className='ce-row '+cls;
+    r.innerHTML=`<span class="ce-key">${lbl}</span><span class="ce-val ${val>=0?'pos':'neg'}">€ ${fmtNum(Math.abs(val))}</span>`;
+    body.appendChild(r);
+  }
+  function rowReadonly(group,absVal){
+    const v=ceVoci.find(x=>x.group===group);if(!v)return;
+    const r=document.createElement('div');r.className='ce-row';
+    r.innerHTML=`<span class="ce-key" style="color:var(--text2)">${v.label} <span style="font-size:10px;color:var(--text3);font-weight:600">(auto)</span></span>
+      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+        <span style="font-size:12px;font-weight:600;color:var(--text3)">– €</span>
+        <span style="width:110px;text-align:right;background:var(--red-light);border:1.5px solid #f5c0c0;border-radius:6px;padding:4px 8px;font-size:13px;font-weight:700;color:var(--red);display:inline-block">${fmtNum(absVal)}</span>
+      </div>`;
+    body.appendChild(r);
+  }
+  hdr('Ricavi');row('ricavi');
+  hdr('Costi della Produzione');row('mat');row('matc');row('ser');row('comp');row('beni');row('oneri');
+  sub('VALORE AGGIUNTO',va,'subtotal');
+  row('per');
+  sub('EBITDA',ebitda,'subtotal-ebitda');
+  row('amm');row('sval');
+  sub('EBIT (Reddito operativo)',ebit,'subtotal-ebit');
+  hdr('Gestione Finanziaria');row('provfin');row('onfin');
+  sub('UTILE ANTE IMPOSTE',ebt,'subtotal-ebit');
+  rowReadonly('imposte', imposteCal);
+  sub('UTILE NETTO',utile,'total-utile');
+
+  // KPI update
+  const pct=(v)=>ricavi?(v/ricavi*100).toFixed(1)+'% ricavi':'—';
+  (document.getElementById('kpi_va')||{}).textContent =fmtNum(va);
+  (document.getElementById('kpi_va_pct')||{}).textContent =pct(va);
+  (document.getElementById('kpi_ebitda')||{}).textContent =fmtNum(ebitda);
+  (document.getElementById('kpi_ebitda_pct')||{}).textContent =pct(ebitda);
+  (document.getElementById('kpi_ebit')||{}).textContent =fmtNum(ebit);
+  (document.getElementById('kpi_ebit_pct')||{}).textContent =pct(ebit);
+  (document.getElementById('kpi_per_kpi')||{}).textContent =fmtNum(Math.abs(per));
+  (document.getElementById('kpi_per_pct')||{}).textContent =ricavi?(Math.abs(per)/ricavi*100).toFixed(1)+'% ricavi':'—';
+
+  renderCostiBars(ricavi);
+  renderQCompare();
+  syncCostiFissiDaCE();
+  renderKpiSettore(ricavi,va,ebitda,ebit,mat,matc,per);
+  renderBenchmark(ricavi,va,ebitda,ebit,mat,matc,per);
+}
+function updateCE(i,raw){
+  const n=parseNum(raw)||0;
+  // Use the permanent ricavo flag to determine sign — never use current val for sign
+  ceVoci[i].val=ceVoci[i].ricavo ? n : -n;
+  clearTimeout(window._ceTmr);
+  window._ceTmr=setTimeout(renderCE,400);
+}
+function renderCostiBars(fat){
+  const c=document.getElementById('costi-bars');if(!c||!fat)return;c.innerHTML='';
+  const colors=['#2a9d8f','#56b4d3','#4a90c4','#9b72cf','#e9a84c','#52b788','#8aa4b8','#c8d8ea','#e07070','#b2ddd9'];
+  ceVoci.filter(v=>v.val<0).forEach((v,i)=>{
+    const pct=Math.abs(v.val)/fat*100;
+    const r=document.createElement('div');r.className='bar-row';
+    r.innerHTML=`<span class="bar-label">${v.label}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.min(pct*1.8,100).toFixed(0)}%;background:${colors[i%colors.length]}"></div></div>
+      <span class="bar-val">${pct.toFixed(1)}%</span>`;
+    c.appendChild(r);
+  });
+}
+function renderQCompare(){
+  const tbody=document.getElementById('q-compare-body');if(!tbody)return;tbody.innerHTML='';
+  [{label:'EBITDA',data:qCompare.ebitda},{label:'EBIT',data:qCompare.ebit}].forEach(r=>{
+    const tr=document.createElement('tr');tr.className='subtotal-row';
+    tr.innerHTML=`<td>${r.label} (€)</td>${r.data.map(v=>`<td style="white-space:nowrap">€ ${fmtNum(v)}</td>`).join('')}`;tbody.appendChild(tr);
+    const dtr=document.createElement('tr');
+    dtr.innerHTML=`<td style="font-size:11px;color:var(--text3)">Var. %</td>${r.data.map((v,i)=>{
+      if(i===0)return'<td style="font-size:11px;color:var(--text3)">—</td>';
+      const d=r.data[i-1]?((v-r.data[i-1])/Math.abs(r.data[i-1])*100):0;
+      return`<td style="font-size:11px;font-weight:700;color:${d>=0?'var(--green)':'var(--red)'}">${d>=0?'↑':'↓'}${Math.abs(d).toFixed(1)}%</td>`;
+    }).join('')}`;tbody.appendChild(dtr);
+  });
+  // edit Q1-Q3
+  const etr=document.createElement('tr');
+  etr.innerHTML=`<td style="font-size:11px;color:var(--text3)">Modifica Q1–Q3</td>
+    ${[0,1,2,3].map(i=>i<3?`<td><input type="text"
+      style="width:90px;background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:4px 6px;font-size:11px;font-weight:700;text-align:right;outline:none;font-family:'Outfit',sans-serif"
+      value="${fmtNum(qCompare.ebitda[i])}" oninput="qCompare.ebitda[${i}]=parseNum(this.value);renderQCompare()" onblur="formatNum(this)"></td>`:
+      `<td style="font-size:11px;color:var(--text3);text-align:right">Auto</td>`).join('')}`;
+  tbody.appendChild(etr);
+}
+
+// ═══ KPI SETTORE ═══
+function renderKpiSettore(fat,va,ebitda,ebit,mat,matc,per){
+  const c=document.getElementById('kpi-sector-grid');if(!c)return;c.innerHTML='';
+  const nPolt=poltrone.length||1;
+  const sett=parseFloat(document.getElementById('cp_settimane').value)||13;
+  const oreG=parseFloat(document.getElementById('cp_ore_giorno').value)||8;
+  const giorni=parseFloat(document.getElementById('cp_giorni').value)||5;
+  const oreTot=sett*giorni*oreG;
+  // Costo studio/ora = costi totali (CE) diviso ore totali disponibili
+  const g=(group)=>ceVoci.find(v=>v.group===group)||{val:0};
+  const costiTotali=Math.abs(g('mat').val)+Math.abs(g('matc').val)+Math.abs(g('ser').val)+
+    Math.abs(g('comp').val)+Math.abs(g('beni').val)+Math.abs(g('oneri').val)+
+    Math.abs(g('per').val)+Math.abs(g('amm').val)+Math.abs(g('sval').val);
+  const costoStudio=oreTot>0?costiTotali/oreTot:0;
+  const costoPolt=oreTot>0?costiTotali/(oreTot/nPolt):0;
+  const incMat=fat>0?Math.abs(mat+matc)/fat*100:0;
+  const incPer=fat>0?Math.abs(per)/fat*100:0;
+  const costiFissi=parseNum(document.getElementById('cp_costi_fissi').value);
+  const bep=ebitda>0?(costiFissi/(ebitda/fat)*100).toFixed(0):0;
+  const fatAnnuo=fat*4;
+  const items=[
+    {icon:'⏱',lbl:'Costo studio / ora',val:'€ '+costoStudio.toFixed(0),sub:'Costi totali ÷ ore disponibili'},
+    {icon:'🪑',lbl:'Costo orario per poltrona',val:'€ '+costoPolt.toFixed(0),sub:'Costi totali ÷ ore per poltrona'},
+    {icon:'🔬',lbl:'Incidenza mat. odontoiatrici',val:incMat.toFixed(1)+'%',sub:'Benchmark settore: 8–12%'},
+    {icon:'👤',lbl:'Incidenza costo dipendenti',val:incPer.toFixed(1)+'%',sub:'Benchmark settore: 20–30%'},
+    {icon:'📊',lbl:'Margine operativo (EBIT)',val:fat>0?(ebit/fat*100).toFixed(1)+'%':'-',sub:'Benchmark settore: 15–25%'},
+    {icon:'🎯',lbl:'Break Even Point (stima)',val:'€ '+fmtNum(parseNum(document.getElementById('cp_costi_fissi').value)),sub:'Costi fissi da coprire'},
+  ];
+  items.forEach(item=>{
+    const d=document.createElement('div');d.className='kpi-sector-card';
+    d.innerHTML=`<div style="font-size:20px;margin-bottom:6px">${item.icon}</div>
+      <div class="ks-label">${item.lbl}</div>
+      <div class="ks-val">${item.val}</div>
+      <div class="ks-sub">${item.sub}</div>`;
+    c.appendChild(d);
+  });
+}
+
+// ═══ BENCHMARK ═══
+const BENCH=[
+  {label:'Incidenza mat. odontoiatrici',bench:'8–12%',benchMid:10,fn:(f,mat,matc,per,va,ebitda,ebit)=>f>0?Math.abs(mat+matc)/f*100:null,fmt:'%',goodRange:[0,12],warnRange:[12,16]},
+  {label:'Incidenza costo personale',bench:'20–30%',benchMid:25,fn:(f,mat,matc,per,va,ebitda,ebit)=>f>0?Math.abs(per)/f*100:null,fmt:'%',goodRange:[15,30],warnRange:[30,38]},
+  {label:'Valore Aggiunto / Ricavi',bench:'55–65%',benchMid:60,fn:(f,mat,matc,per,va,ebitda,ebit)=>f>0?va/f*100:null,fmt:'%',goodRange:[55,70],warnRange:[50,55]},
+  {label:'EBITDA margin',bench:'25–35%',benchMid:30,fn:(f,mat,matc,per,va,ebitda,ebit)=>f>0?ebitda/f*100:null,fmt:'%',goodRange:[25,100],warnRange:[15,25]},
+  {label:'EBIT margin',bench:'15–25%',benchMid:20,fn:(f,mat,matc,per,va,ebitda,ebit)=>f>0?ebit/f*100:null,fmt:'%',goodRange:[15,100],warnRange:[8,15]},
+  {label:'Costo totale / Ricavi',bench:'< 75%',benchMid:75,fn:(f,mat,matc,per,va,ebitda,ebit)=>f>0?(f-ebit)/f*100:null,fmt:'%',goodRange:[0,75],warnRange:[75,85]},
+  {label:'Ricavi per paziente (trim.)',bench:'350–500 €',benchMid:425,fn:(f,mat,matc,per,va,ebitda,ebit)=>{const paz=parseNum(document.getElementById('kpi_paz').value);return paz>0?f/paz:null;},fmt:'€',goodRange:[350,700],warnRange:[200,350]},
+  {label:'Produttività per poltrona (trim.)',bench:'100–150K €/anno',benchMid:31250,fn:(f)=>{const n=poltrone.length||1;return f>0?f/n:null;},fmt:'€',goodRange:[25000,999999],warnRange:[15000,25000]},
+  {label:'Incidenza spese generali (ser.+beni)',bench:'10–18%',benchMid:14,fn:(f,mat,matc,per,va,ebitda,ebit)=>{const g=(group)=>ceVoci.find(v=>v.group===group)||{val:0};return f>0?(Math.abs(g('ser').val)+Math.abs(g('beni').val))/f*100:null;},fmt:'%',goodRange:[0,18],warnRange:[18,25]},
+  {label:'ROI operativo (EBIT / Tot. costi)',bench:'20–35%',benchMid:27,fn:(f,mat,matc,per,va,ebitda,ebit)=>{const totCosti=f-ebit;return totCosti>0?ebit/totCosti*100:null;},fmt:'%',goodRange:[20,100],warnRange:[10,20]},
+];
+
+let benchTrend=[
+  {label:'Incid. materiali %',   q:[null,null,null,null], bench:'8–12%'},
+  {label:'Incid. personale %',   q:[null,null,null,null], bench:'20–30%'},
+  {label:'VA / Ricavi %',        q:[null,null,null,null], bench:'55–65%'},
+  {label:'EBITDA margin %',      q:[null,null,null,null], bench:'25–35%'},
+  {label:'EBIT margin %',        q:[null,null,null,null], bench:'15–25%'},
+  {label:'Ric. per paziente €',  q:[null,null,null,null], bench:'350–500'},
+];
+function renderBenchTrend(fat,va,ebitda,ebit,mat,matc,per){
+  const tbody=document.getElementById('bench-trend-tbody');
+  if(!tbody)return;
+  // Auto-fill current quarter
+  const periodo=document.getElementById('periodoInput').value;
+  const match=periodo.match(/Q(\d)/);
+  const qIdx=match?parseInt(match[1])-1:3;
+  const paz=parseNum(document.getElementById('kpi_paz').value);
+  const autoVals=[
+    fat>0?+(Math.abs(mat+matc)/fat*100).toFixed(1):null,
+    fat>0?+(Math.abs(per)/fat*100).toFixed(1):null,
+    fat>0?+(va/fat*100).toFixed(1):null,
+    fat>0?+(ebitda/fat*100).toFixed(1):null,
+    fat>0?+(ebit/fat*100).toFixed(1):null,
+    paz>0?+(fat/paz).toFixed(0):null,
+  ];
+  benchTrend.forEach((r,i)=>{ r.q[qIdx]=autoVals[i]; });
+  tbody.innerHTML='';
+  benchTrend.forEach((r,ri)=>{
+    const tr=document.createElement('tr');
+    const cells=r.q.map((v,qi)=>{
+      const isCurr=qi===qIdx;
+      if(isCurr) return `<td style="background:var(--teal-light);font-weight:700;color:var(--teal-dark)">${v!==null?v:'—'}</td>`;
+      // Use data attributes instead of passing large numbers as inline args
+      return `<td><input type="text" value="${v!==null?v:''}" placeholder="—"
+        style="width:60px;text-align:center;background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:3px 6px;font-size:12px;font-weight:600;outline:none;font-family:'Outfit',sans-serif"
+        data-ri="${ri}" data-qi="${qi}"
+        onblur="benchTrend[this.dataset.ri].q[this.dataset.qi]=parseFloat(this.value)||null;renderCE()"></td>`;
+    }).join('');
+    tr.innerHTML=`<td style="font-size:12px;font-weight:600">${r.label}</td>${cells}<td style="font-size:11px;color:var(--text3);font-weight:600">${r.bench}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderBenchmark(fat,va,ebitda,ebit,mat,matc,per){
+  const tbody=document.getElementById('bench-tbody');if(!tbody)return;tbody.innerHTML='';
+  BENCH.forEach(b=>{
+    const val=b.fn(fat,mat,matc,per,va,ebitda,ebit);
+    if(val===null)return;
+    const fmtVal=val.toFixed(1)+b.fmt;
+    let cls='bench-ok',icon='✅',label='Ottimo';
+    if(val<b.goodRange[0]||val>b.goodRange[1]){
+      if(b.warnRange&&val>=b.warnRange[0]&&val<=b.warnRange[1]){cls='bench-warn';icon='⚠️';label='Attenzione';}
+      else{cls='bench-bad';icon='🔴';label='Critico';}
+    }
+    const scost=((val-b.benchMid)).toFixed(1);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${b.label}</td><td>${b.bench}</td>
+      <td><strong>${fmtVal}</strong></td>
+      <td style="color:${val>=b.goodRange[0]&&val<=b.goodRange[1]?'var(--green)':val>=b.warnRange[0]&&val<=b.warnRange[1]?'var(--amber)':'var(--red)'}">
+        ${scost>0?'+':''}${scost}pp vs benchmark</td>
+      <td><span class="${cls}">${icon} ${label}</span></td>`;
+    tbody.appendChild(tr);
+  });
+  renderBenchBars(fat,va,ebitda,ebit,mat,matc,per);
+  renderBenchTrend(fat,va,ebitda,ebit,mat,matc,per);
+}
+function renderBenchBars(fat,va,ebitda,ebit,mat,matc,per){
+  function buildBars(cid,items){
+    const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
+    items.forEach(item=>{
+      const row=document.createElement('div');row.className='bar-row';
+      const studVal=item.studio.toFixed(1);
+      const benchVal=item.bench;
+      row.innerHTML=`
+        <span class="bar-label">${item.label}</span>
+        <div style="flex:1;position:relative;height:20px">
+          <div style="position:absolute;inset:6px 0;background:var(--bg2);border-radius:4px;overflow:hidden">
+            <div style="height:100%;width:${Math.min(item.studio,100)}%;background:${item.studio>=item.goodMin&&item.studio<=item.goodMax?'var(--green)':item.studio>=item.warnMin&&item.studio<=item.warnMax?'var(--amber)':'var(--red)'};border-radius:4px;transition:width .7s"></div>
+          </div>
+          <div style="position:absolute;top:2px;bottom:2px;left:${Math.min(item.benchMid,100)}%;width:2px;background:var(--teal);border-radius:1px"></div>
+        </div>
+        <span class="bar-val" style="color:${item.studio>=item.goodMin&&item.studio<=item.goodMax?'var(--green)':item.studio>=item.warnMin&&item.studio<=item.warnMax?'var(--amber)':'var(--red)'}">${studVal}%</span>
+        <span class="bar-pct" style="color:var(--text3)">${item.bench}</span>`;
+      c.appendChild(row);
+    });
+  }
+  buildBars('bench-prod-bars',[
+    {label:'Incid. materiali',studio:fat>0?Math.abs(mat+matc)/fat*100:0,bench:'8–12%',benchMid:10,goodMin:0,goodMax:12,warnMin:12,warnMax:16},
+    {label:'Incid. personale',studio:fat>0?Math.abs(per)/fat*100:0,bench:'20–30%',benchMid:25,goodMin:15,goodMax:30,warnMin:30,warnMax:38},
+  ]);
+  buildBars('bench-red-bars',[
+    {label:'VA / Ricavi',studio:fat>0?va/fat*100:0,bench:'55–65%',benchMid:60,goodMin:55,goodMax:100,warnMin:45,warnMax:55},
+    {label:'EBITDA margin',studio:fat>0?ebitda/fat*100:0,bench:'25–35%',benchMid:30,goodMin:25,goodMax:100,warnMin:15,warnMax:25},
+    {label:'EBIT margin',studio:fat>0?ebit/fat*100:0,bench:'15–25%',benchMid:20,goodMin:15,goodMax:100,warnMin:8,warnMax:15},
+  ]);
+}
+
+// ═══ FISCALE ═══
+function setFiscalRegime(r){
+  fiscalRegime=r;
+  document.getElementById('fisc-irpef-panel').style.display=r==='irpef'?'block':'none';
+  document.getElementById('fisc-srl-panel').style.display=r==='srl'?'block':'none';
+  document.getElementById('sw-irpef').classList.toggle('active',r==='irpef');
+  document.getElementById('sw-srl').classList.toggle('active',r==='srl');
+  if(r==='irpef')calcEnpamIrpef(); else{calcSrl();calcEnpamSrl();}
+}
+function calcEnpamIrpef(){
+  const reddito=parseNum(document.getElementById('irpef_reddito').value);
+  const aliq=parseFloat(document.getElementById('irpef_enpam_aliq').value)||0;
+  const qAEl=document.getElementById('irpef_quota_a');const qA=qAEl?parseNum(qAEl.value)||2640:2640;
+  const qB=reddito*(aliq/100),tot=qA+qB;
+  (document.getElementById('irpef_enpam_val')||{}).textContent =fmtNum(tot);
+  renderCumulativo();
+  const _enpamEl=document.getElementById('enpam-irpef-result');if(_enpamEl)_enpamEl.innerHTML=`
+    <div class="sim-metric-row"><span class="sim-metric-key">Reddito imponibile</span><span class="sim-metric-val">€ ${fmtNum(reddito)}</span></div>
+    <div class="sim-metric-row"><span class="sim-metric-key">Quota A (fissa indicativa)</span><span class="sim-metric-val neg">€ ${fmtNum(qA)}</span></div>
+    <div class="sim-metric-row"><span class="sim-metric-key">Quota B (${aliq}% × reddito)</span><span class="sim-metric-val neg">€ ${fmtNum(qB)}</span></div>
+    <div class="sim-metric-row" style="border-top:2px solid var(--teal-mid);padding-top:10px;margin-top:6px">
+      <span class="sim-metric-key" style="font-weight:700;color:var(--text)">Totale ENPAM stimato</span>
+      <span class="sim-metric-val" style="color:var(--teal-dark);font-size:16px">€ ${fmtNum(tot)}</span></div>`;
+}
+function calcSrl(){
+  const utile=parseNum(document.getElementById('srl_utile').value);
+  const vp=parseNum(document.getElementById('srl_vp').value);
+  const irapAliq=parseFloat(document.getElementById('irap_aliq')?document.getElementById('irap_aliq').value:3.9)||3.9;
+  const irap=vp*(irapAliq/100);
+  const ires=utile*0.24; // IRES e IRAP sono imposte indipendenti
+  const irapBadge=document.getElementById('irap_aliq_badge');if(irapBadge)irapBadge.textContent='Aliq. '+irapAliq+'%';
+  (document.getElementById('srl_ires')||{}).textContent =fmtNum(ires);
+  (document.getElementById('srl_irap')||{}).textContent =fmtNum(irap);
+  const _srlFEl=document.getElementById('srl-fiscale-result');if(_srlFEl)_srlFEl.innerHTML=`
+    <div class="sim-metric-row"><span class="sim-metric-key">Utile ante imposte</span><span class="sim-metric-val">€ ${fmtNum(utile)}</span></div>
+    <div class="sim-metric-row" style="padding-top:6px;border-top:1px solid var(--border)"><span class="sim-metric-key" style="color:var(--amber);font-weight:600">IRES (24% su utile)</span><span class="sim-metric-val neg">– € ${fmtNum(ires)}</span></div>
+    <div class="sim-metric-row"><span class="sim-metric-key" style="color:var(--blue);font-weight:600">Base IRAP</span><span class="sim-metric-val">€ ${fmtNum(vp)}</span></div>
+    <div class="sim-metric-row"><span class="sim-metric-key" style="color:var(--blue);font-weight:600">IRAP (${irapAliq}%)</span><span class="sim-metric-val neg">– € ${fmtNum(irap)}</span></div>
+    <div class="sim-metric-row" style="border-top:2px solid var(--teal-mid);padding-top:10px;margin-top:6px">
+      <span class="sim-metric-key" style="font-weight:700;color:var(--text)">Totale IRES + IRAP</span>
+      <span class="sim-metric-val" style="color:var(--red);font-size:16px;font-family:'Nunito',sans-serif">€ ${fmtNum(ires+irap)}</span></div>`;
+  renderCumulativo();
+  calcEnpamSrl();
+  // Scadenze SRL: saldo giugno = 60% IRES+IRAP, acconto novembre = 40% IRES + 40% IRAP
+  const totTasse=ires+irap;
+  const saldo=Math.round(totTasse*0.6);
+  const acconto=Math.round(totTasse*0.4);
+  const s1=document.querySelector('#scad-srl-tbody tr:nth-child(1)');
+  const s2=document.querySelector('#scad-srl-tbody tr:nth-child(2)');
+  if(s1){
+    const cells=s1.querySelectorAll('td');
+    if(cells[2])cells[2].textContent='€ '+fmtNum(Math.round(ires*0.6));
+    if(cells[3])cells[3].textContent='€ '+fmtNum(Math.round(irap*0.6));
+  }
+  if(s2){
+    const cells=s2.querySelectorAll('td');
+    if(cells[2])cells[2].textContent='€ '+fmtNum(Math.round(ires*0.4));
+    if(cells[3])cells[3].textContent='€ '+fmtNum(Math.round(irap*0.4));
+  }
+}
+function calcEnpamSrl(){
+  const comp=parseNum(document.getElementById('srl_comp_amm').value);
+  const aliq=parseFloat(document.getElementById('srl_enpam_aliq').value)||0;
+  const baseType=document.getElementById('srl_enpam_base').value;
+  const utile=parseNum(document.getElementById('srl_utile').value);
+  const utilePost=utile-utile*0.24;
+  const base=baseType==='compenso'?comp:utilePost+comp;
+  const qAElS=document.getElementById('srl_quota_a');const qA=qAElS?parseNum(qAElS.value)||2640:2640;
+  const qB=base*(aliq/100),tot=qA+qB;
+  (document.getElementById('srl_enpam_val')||{}).textContent =fmtNum(tot);
+  const _srlEnEl=document.getElementById('srl-enpam-result');if(_srlEnEl)_srlEnEl.innerHTML=`
+    <div class="sim-metric-row"><span class="sim-metric-key">Base calcolo</span><span class="sim-metric-val">€ ${fmtNum(base)}</span></div>
+    <div class="sim-metric-row"><span class="sim-metric-key">Quota A (fissa)</span><span class="sim-metric-val neg">€ ${fmtNum(qA)}</span></div>
+    <div class="sim-metric-row"><span class="sim-metric-key">Quota B (${aliq}%)</span><span class="sim-metric-val neg">€ ${fmtNum(qB)}</span></div>
+    <div class="sim-metric-row" style="border-top:2px solid var(--teal-mid);padding-top:10px;margin-top:6px">
+      <span class="sim-metric-key" style="font-weight:700;color:var(--text)">Totale ENPAM</span>
+      <span class="sim-metric-val" style="color:var(--teal-dark);font-size:16px">€ ${fmtNum(tot)}</span></div>`;
+}
+function addScad(tbodyId,cols){
+  const tbody=document.getElementById(tbodyId);
+  const tr=document.createElement('tr');
+  const cells=Array(cols).fill('<td contenteditable="true">—</td>').join('');
+  tr.innerHTML=cells+`<td><button class="del-btn" onclick="this.closest('tr').remove()">×</button></td>`;
+  tbody.appendChild(tr);
+}
+function addScadSrl(){
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td contenteditable="true">data</td><td contenteditable="true">Descrizione</td><td contenteditable="true">€ 0</td><td contenteditable="true">€ 0</td><td contenteditable="true">F24</td><td><button class="del-btn" onclick="this.closest('tr').remove()">×</button></td>`;
+  document.getElementById('scad-srl-tbody').appendChild(tr);
+}
+
+// ═══ SIMULATORE ═══
+function calcIrpef(r){
+  const sc=[{fino:28000,a:.23},{fino:50000,a:.35},{fino:Infinity,a:.43}];
+  let imp=0,prev=0,det=[];
+  for(const s of sc){
+    if(r<=prev)break;
+    const impon=Math.min(r,s.fino)-prev,i=impon*s.a;
+    det.push({da:prev,a:Math.min(r,s.fino),aliq:s.a*100,impon,imp:i});
+    imp+=i;prev=s.fino;if(r<=s.fino)break;
+  }
+  return{imp,det};
+}
+function calcola(){
+  const reg=document.getElementById('s_reg').value;
+  const fat=parseNum(document.getElementById('s_fat').value);
+  const mat=parseNum(document.getElementById('s_mat').value);
+  const matc=parseNum(document.getElementById('s_matc').value);
+  const ser=parseNum(document.getElementById('s_ser').value);
+  const comp=parseNum(document.getElementById('s_comp').value);
+  const beni=parseNum(document.getElementById('s_beni').value);
+  const oneri=parseNum(document.getElementById('s_oneri').value);
+  const per=parseNum(document.getElementById('s_per').value);
+  const amm=parseNum(document.getElementById('s_amm').value);
+  const sval=parseNum(document.getElementById('s_sval').value);
+  const fin=parseNum(document.getElementById('s_fin').value);
+  const enp=parseNum(document.getElementById('s_enp').value);
+  const va=fat-mat-matc-ser-comp-beni-oneri;
+  const ebitda=va-per;
+  const ebit=ebitda-amm-sval;
+  const ebt=ebit-fin;
+  let imposta=0,irap=0,netto=0,metricsHtml='',scaglioniHtml='';
+  if(reg==='irpef'){
+    const base=Math.max(0,ebt-enp);
+    const res=calcIrpef(base);imposta=res.imp;netto=ebt-imposta-enp;
+    metricsHtml=`
+      <div class="sim-metric-row"><span class="sim-metric-key">Fatturato</span><span class="sim-metric-val">€ ${fmtNum(fat)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">VA</span><span class="sim-metric-val pos">€ ${fmtNum(va)} (${fat?(va/fat*100).toFixed(1):'0'}%)</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">EBITDA</span><span class="sim-metric-val pos">€ ${fmtNum(ebitda)} (${fat?(ebitda/fat*100).toFixed(1):'0'}%)</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">EBIT</span><span class="sim-metric-val pos">€ ${fmtNum(ebit)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">Base imp. IRPEF</span><span class="sim-metric-val">€ ${fmtNum(base)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">IRPEF (scaglioni)</span><span class="sim-metric-val neg">– € ${fmtNum(imposta)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">ENPAM</span><span class="sim-metric-val neg">– € ${fmtNum(enp)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key" style="font-weight:700;color:var(--text)">Carico totale</span><span class="sim-metric-val neg">– € ${fmtNum(imposta+enp)} (${fat?((imposta+enp)/fat*100).toFixed(1):'0'}%)</span></div>`;
+    scaglioniHtml=`<table style="width:100%;border-collapse:collapse"><thead><tr>
+      <th style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;padding:6px 8px;text-align:right;border-bottom:2px solid var(--border);background:var(--surface2)">Da €</th>
+      <th style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;padding:6px 8px;text-align:right;border-bottom:2px solid var(--border);background:var(--surface2)">A €</th>
+      <th style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;padding:6px 8px;text-align:right;border-bottom:2px solid var(--border);background:var(--surface2)">Aliq.</th>
+      <th style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;padding:6px 8px;text-align:right;border-bottom:2px solid var(--border);background:var(--surface2)">Imposta</th>
+    </tr></thead><tbody>
+    ${res.det.map(d=>`<tr>
+      <td style="padding:8px;text-align:right;font-size:12px;border-bottom:1px solid var(--border)">€ ${fmtNum(d.da)}</td>
+      <td style="padding:8px;text-align:right;font-size:12px;border-bottom:1px solid var(--border)">€ ${d.a===Infinity?'oltre':fmtNum(d.a)}</td>
+      <td style="padding:8px;text-align:right;font-size:12px;font-weight:700;color:var(--amber);border-bottom:1px solid var(--border)">${d.aliq}%</td>
+      <td style="padding:8px;text-align:right;font-size:12px;font-weight:700;color:var(--red);border-bottom:1px solid var(--border)">€ ${fmtNum(d.imp)}</td>
+    </tr>`).join('')}
+    <tr style="background:var(--red-light)"><td colspan="3" style="padding:8px;font-size:13px;font-weight:700;color:var(--text)">Totale IRPEF</td>
+    <td style="padding:8px;text-align:right;font-size:14px;font-weight:800;color:var(--red)">€ ${fmtNum(imposta)}</td></tr>
+    </tbody></table>`;
+  }else{
+    const _irapAliqSim=parseFloat(document.getElementById('irap_aliq')?document.getElementById('irap_aliq').value:3.9)||3.9;
+    irap=ebt*(_irapAliqSim/100);imposta=ebt*0.24;netto=ebt-irap-imposta-enp; // IRES e IRAP indipendenti
+    metricsHtml=`
+      <div class="sim-metric-row"><span class="sim-metric-key">Fatturato</span><span class="sim-metric-val">€ ${fmtNum(fat)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">EBITDA</span><span class="sim-metric-val pos">€ ${fmtNum(ebitda)} (${fat?(ebitda/fat*100).toFixed(1):'0'}%)</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">EBIT</span><span class="sim-metric-val pos">€ ${fmtNum(ebit)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">IRAP (3.9%)</span><span class="sim-metric-val neg">– € ${fmtNum(irap)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">IRES (24%)</span><span class="sim-metric-val neg">– € ${fmtNum(imposta)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">ENPAM</span><span class="sim-metric-val neg">– € ${fmtNum(enp)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key" style="font-weight:700;color:var(--text)">Carico totale</span><span class="sim-metric-val neg">– € ${fmtNum(irap+imposta+enp)} (${fat?((irap+imposta+enp)/fat*100).toFixed(1):'0'}%)</span></div>`;
+    scaglioniHtml=`<div style="padding:16px;background:var(--teal-light);border-radius:8px;text-align:center">
+      <div style="font-size:28px;font-weight:800;font-family:'Nunito',sans-serif;color:var(--teal-dark);margin:8px 0">IRES 24%</div>
+      <div style="font-size:13px;color:var(--text2)">€ ${fmtNum(ebt)} × 24% = <strong>€ ${fmtNum(imposta)}</strong></div>
+      <div style="font-size:13px;color:var(--text2);margin-top:4px">IRAP: base × ${_irapAliqSim}% = <strong>€ ${fmtNum(irap)}</strong> | IRES: utile × 24% = <strong>€ ${fmtNum(imposta)}</strong></div></div>`;
+  }
+  (document.getElementById('sim-big')||{}).textContent ='€ '+fmtNum(netto);
+  (document.getElementById('sim-regime-lbl')||{}).textContent =reg==='irpef'?'Regime IRPEF a scaglioni':'Regime IRES 24% + IRAP (aliquota selezionata)';
+  const _simM=document.getElementById('sim-metrics');if(_simM)_simM.innerHTML=metricsHtml;
+  const _simS=document.getElementById('scaglioni-panel');if(_simS)_simS.innerHTML=scaglioniHtml;
+  if(fat>0)renderDonut([
+    {label:'Reddito netto',val:Math.max(0,netto),color:'#2a9d8f'},
+    {label:'Imposte',val:Math.max(0,imposta+irap),color:'#e07070'},
+    {label:'ENPAM',val:Math.max(0,enp),color:'#e9a84c'},
+    {label:'Costi operativi',val:mat+matc+ser+comp+beni+oneri+per+amm+sval,color:'#4a90c4'},
+  ]);
+}
+function renderDonut(slices){
+  const svg=document.getElementById('donut-svg'),leg=document.getElementById('donut-legend');
+  svg.innerHTML='';leg.innerHTML='';
+  const cx=70,cy=70,r=52,inner=34,tot=slices.reduce((s,d)=>s+d.val,0);if(!tot)return;
+  let ang=-Math.PI/2;
+  slices.forEach(s=>{
+    const a=s.val/tot*2*Math.PI;
+    const x1=cx+r*Math.cos(ang),y1=cy+r*Math.sin(ang),x2=cx+r*Math.cos(ang+a),y2=cy+r*Math.sin(ang+a);
+    const xi1=cx+inner*Math.cos(ang),yi1=cy+inner*Math.sin(ang),xi2=cx+inner*Math.cos(ang+a),yi2=cy+inner*Math.sin(ang+a);
+    const large=a>Math.PI?1:0;
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M ${xi1} ${yi1} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} L ${xi2} ${yi2} A ${inner} ${inner} 0 ${large} 0 ${xi1} ${yi1} Z`);
+    path.setAttribute('fill',s.color);path.setAttribute('opacity','0.92');svg.appendChild(path);
+    const item=document.createElement('div');item.className='legend-item';
+    item.innerHTML=`<div class="legend-dot" style="background:${s.color}"></div><span>${s.label}: <strong>${(s.val/tot*100).toFixed(0)}%</strong></span>`;
+    leg.appendChild(item);ang+=a;
+  });
+}
+
+
+
+// ═══ NUOVO STUDIO ═══
+function iniziaNuovoStudio(){
+  const nome=document.getElementById('ns_nome').value.trim();
+  if(!nome){alert('Inserisci la denominazione dello studio.');return;}
+  // Copia dati anagrafici
+  document.getElementById('s_nome').value=nome;
+  document.getElementById('s_piva').value=document.getElementById('ns_piva').value;
+  document.getElementById('s_indirizzo').value=document.getElementById('ns_indirizzo').value;
+  document.getElementById('s_forma').value=document.getElementById('ns_forma').value;
+  document.getElementById('periodoInput').value=document.getElementById('ns_trimestre').value;
+  syncPeriodo(); updateStudioHeader();
+  // Azzera KPI
+  ['kpi_fat','kpi_fat_prec','kpi_paz','prec_paz'].forEach(id=>{
+    document.getElementById(id).value='0';
+  });
+  // Azzera branche
+  branche=[
+    {label:'Implantologia',val:0,color:'#2a9d8f'},
+    {label:'Ortodonzia',val:0,color:'#56b4d3'},
+    {label:'Conservativa',val:0,color:'#4a90c4'},
+    {label:'Protesi',val:0,color:'#52b788'},
+    {label:'Igiene / Prevenzione',val:0,color:'#9b72cf'},
+    {label:'Endodonzia',val:0,color:'#c8d8ea'},
+  ];
+  // Azzera sparkQ
+  sparkQ=[0,0,0,0];
+  // Azzera CE
+  ceVoci.forEach(v=>{v.val=v.val>0?0:-0;});
+  // Azzera qCompare
+  qCompare={ebitda:[0,0,0,0],ebit:[0,0,0,0]};
+  // Imposta regime fiscale
+  const reg=document.getElementById('ns_regime').value;
+  setFiscalRegime(reg);
+  document.getElementById('s_reg').value=reg;
+  // Re-render tutto
+  renderBranche(); renderPoltrone(); renderSparkQ(); renderCE();
+  calcKpiDeltas(); calcola();
+  document.getElementById('nuovo-studio-modal').classList.remove('open');
+  // Vai alla sezione produzione
+  showSection('produzione', document.querySelector('.nav-tab'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('.nav-tab').classList.add('active');
+}
+
+
+
+// ═══ CUMULATIVO FISCALE ═══
+let cumulRows=[
+  {q:'Q1',reddito:0,irap:0,auto:false},
+  {q:'Q2',reddito:0,irap:0,auto:false},
+  {q:'Q3',reddito:0,irap:0,auto:false},
+  {q:'Q4',reddito:0,irap:0,auto:false},
+];
+function getCurrQIdx(){
+  const p=document.getElementById('periodoInput').value;
+  const m=p.match(/Q(\d)/);return m?parseInt(m[1])-1:0;
+}
+function renderCumulativo(){
+  const periodo=document.getElementById('periodoInput').value;
+  const match=periodo.match(/Q(\d)/);
+  const qIdx=match?parseInt(match[1])-1:3;
+  // Auto-fill current quarter from CE
+  const g=(group)=>ceVoci.find(v=>v.group===group)||{val:0};
+  const ricavi=g('ricavi').val,comp=g('comp').val,beni=g('beni').val,
+        mat=g('mat').val,matc=g('matc').val,ser=g('ser').val,oneri=g('oneri').val,
+        per=g('per').val,amm=g('amm').val,sval=g('sval').val,
+        provfin=g('provfin').val,onfin=g('onfin').val;
+  const va=ricavi+mat+matc+ser+comp+beni+oneri;
+  const ebt=va+per+amm+sval+provfin+onfin;
+  const baseIrap=ricavi+mat+matc+ser+beni+oneri;
+  cumulRows[qIdx].reddito=Math.max(0,ebt);
+  cumulRows[qIdx].irap=Math.max(0,baseIrap);
+  cumulRows[qIdx].auto=true;
+
+  const tbody=document.getElementById('cumul-tbody');
+  if(!tbody)return;
+  tbody.innerHTML='';
+  let totReddito=0,totIrap=0;
+  const currQIdx=getCurrQIdx();
+  const visibleRows=cumulRows.slice(0,currQIdx+1);
+  visibleRows.forEach((r,i)=>{
+    totReddito+=r.reddito;totIrap+=r.irap;
+    // Calcola imposte riga per riga (stesso algoritmo del CE)
+    let impRow=0;
+    if(fiscalRegime==='srl'){
+      const irapAliq=parseFloat(document.getElementById('irap_aliq')?document.getElementById('irap_aliq').value:3.9)||3.9;
+      impRow=Math.round(r.irap*(irapAliq/100)+r.reddito*0.24);
+    } else {
+      const res=calcIrpef(Math.max(0,r.reddito));
+      impRow=Math.round(res.imp);
+    }
+    const tr=document.createElement('tr');
+    const isCurrent=(i===currQIdx);
+    tr.innerHTML=`<td style="padding:9px 12px;font-size:13px;font-weight:600">${r.q}${isCurrent?' <span style="font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:1px 7px;border-radius:8px;font-weight:700">corrente</span>':''}</td>
+      <td style="padding:9px 12px;text-align:right">
+        ${r.auto?`<span style="font-size:13px;font-weight:700;color:var(--teal-dark)">€ ${fmtNum(r.reddito)}</span>`:
+        `<input type="text" value="${fmtNum(r.reddito)}"
+          style="width:120px;text-align:right;background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;font-weight:700;outline:none;font-family:'Outfit',sans-serif"
+          onblur="cumulRows[${i}].reddito=parseNum(this.value);renderCumulativo()" oninput="cumulRows[${i}].reddito=parseNum(this.value)">`}
+      </td>
+      <td style="padding:9px 12px;text-align:right">
+        ${r.auto?`<span style="font-size:13px;font-weight:700;color:var(--blue)">€ ${fmtNum(r.irap)}</span>`:
+        `<input type="text" value="${fmtNum(r.irap)}"
+          style="width:120px;text-align:right;background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;font-weight:700;outline:none;font-family:'Outfit',sans-serif"
+          onblur="cumulRows[${i}].irap=parseNum(this.value);renderCumulativo()" oninput="cumulRows[${i}].irap=parseNum(this.value)">`}
+      </td>
+      <td style="padding:9px 12px;text-align:right;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--red)">– € ${fmtNum(impRow)}</td>
+      <td style="padding:9px 12px;font-size:11px;color:var(--text3)">${r.auto?'<span style="background:var(--teal-light);color:var(--teal-dark);padding:2px 8px;border-radius:10px;font-weight:700;font-size:10px">Dal CE</span>':'Manuale'}</td>`;
+    tbody.appendChild(tr);
+  });
+  const _tr=document.getElementById('cumul-tot-reddito');
+  const _ti=document.getElementById('cumul-tot-irap');
+  if(_tr)_tr.textContent='€ '+fmtNum(totReddito);
+  if(_ti)_ti.textContent='€ '+fmtNum(totIrap);
+  // Totale imposte = somma delle imposte per trimestre
+  let totImposte=0;
+  visibleRows.forEach(r=>{
+    if(fiscalRegime==='srl'){
+      const irapAliq=parseFloat(document.getElementById('irap_aliq')?document.getElementById('irap_aliq').value:3.9)||3.9;
+      totImposte+=Math.round(r.irap*(irapAliq/100)+r.reddito*0.24);
+    } else {
+      const res=calcIrpef(Math.max(0,r.reddito));
+      totImposte+=Math.round(res.imp);
+    }
+  });
+  const totImpEl=document.getElementById('cumul-tot-imposte');
+  if(totImpEl)totImpEl.textContent='– € '+fmtNum(totImposte);
+  // Calcola imposte sul totale
+  const resEl=document.getElementById('cumul-imposte-result');
+  if(!resEl)return;
+  if(fiscalRegime==='irpef'){
+    const res=calcIrpef(totReddito);
+    const enpamAliq=parseFloat(document.getElementById('irpef_enpam_aliq').value)||9.75;
+    const enpam=2640+totReddito*(enpamAliq/100);
+    resEl.innerHTML=`
+      <div class="sim-metric-row"><span class="sim-metric-key">Reddito cumulativo periodo</span><span class="sim-metric-val">€ ${fmtNum(totReddito)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">IRPEF (scaglioni progressivi)</span><span class="sim-metric-val neg">– € ${fmtNum(res.imp)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">ENPAM stimata sul periodo</span><span class="sim-metric-val neg">– € ${fmtNum(enpam)}</span></div>
+      <div class="sim-metric-row" style="border-top:2px solid var(--teal-mid);margin-top:6px;padding-top:10px">
+        <span class="sim-metric-key" style="font-weight:700;color:var(--text)">Carico fiscale totale periodo</span>
+        <span class="sim-metric-val" style="color:var(--red);font-size:16px;font-family:'Nunito',sans-serif">– € ${fmtNum(res.imp+enpam)}</span>
+      </div>
+      <div class="sim-metric-row">
+        <span class="sim-metric-key" style="color:var(--text3)">Aliquota effettiva</span>
+        <span class="sim-metric-val" style="color:var(--text3)">${totReddito>0?((res.imp/totReddito)*100).toFixed(1):'0'}%</span>
+      </div>`;
+  } else {
+    const irapAliq=parseFloat(document.getElementById('irap_aliq')?document.getElementById('irap_aliq').value:3.9)||3.9;
+    const irap=totIrap*(irapAliq/100);
+    const ires=totReddito*0.24; // IRES indipendente da IRAP
+    resEl.innerHTML=`
+      <div class="sim-metric-row"><span class="sim-metric-key">Utile ante imposte cumulativo</span><span class="sim-metric-val">€ ${fmtNum(totReddito)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">IRAP (${irapAliq}% su base ${fmtNum(totIrap)})</span><span class="sim-metric-val neg">– € ${fmtNum(irap)}</span></div>
+      <div class="sim-metric-row"><span class="sim-metric-key">IRES (24% su utile ante imposte ${fmtNum(totReddito)})</span><span class="sim-metric-val neg">– € ${fmtNum(ires)}</span></div>
+      <div class="sim-metric-row" style="border-top:2px solid var(--teal-mid);margin-top:6px;padding-top:10px">
+        <span class="sim-metric-key" style="font-weight:700;color:var(--text)">Carico fiscale totale periodo</span>
+        <span class="sim-metric-val" style="color:var(--red);font-size:16px;font-family:'Nunito',sans-serif">– € ${fmtNum(irap+ires)}</span>
+      </div>`;
+  }
+}
+
+// ═══ CALCOLO IMPOSTE AUTO DAL CE ═══
+function calcImposteAutoce(ebt, baseIrap){
+  // Calcolo identico alla sezione Fiscale — stesso numero, nessuna proiezione
+  if(ebt<=0)return 0;
+  if(fiscalRegime==='srl'){
+    const irapAliq=parseFloat(document.getElementById('irap_aliq')?document.getElementById('irap_aliq').value:3.9)||3.9;
+    const irap=(baseIrap||0)*(irapAliq/100);
+    const ires=ebt*0.24;
+    return Math.round(irap+ires);
+  } else {
+    // IRPEF a scaglioni sul reddito trimestrale (NON annualizzato)
+    const res=calcIrpef(Math.max(0,ebt));
+    return Math.round(res.imp);
+  }
+}
+
+// ═══ SYNC FISCALE FROM CE ═══
+
+function syncFatToRicavi(){
+  const fat=parseNum(document.getElementById('kpi_fat').value);
+  const vRicavi=ceVoci.find(v=>v.group==='ricavi');
+  if(vRicavi && fat>0){ vRicavi.val=fat; }
+  // Don't re-render CE here to avoid loop — CE will pick it up on next manual renderCE
+}
+
+function syncFiscaleFromCE(){
+  const g=(group)=>ceVoci.find(v=>v.group===group)||{val:0};
+  const ricavi=g('ricavi').val,comp=g('comp').val,beni=g('beni').val,
+        mat=g('mat').val,matc=g('matc').val,ser=g('ser').val,oneri=g('oneri').val,
+        per=g('per').val,amm=g('amm').val,sval=g('sval').val,
+        provfin=g('provfin').val,onfin=g('onfin').val;
+  const va=ricavi+mat+matc+ser+comp+beni+oneri;
+  const ebitda=va+per;
+  const ebit=ebitda+amm+sval;
+  const ebt=ebit+provfin+onfin;
+  // Base IRAP = Ricavi - Costi (esclusi personale e comp.amm) + ripresa comp.amm
+  // = ricavi + mat + matc + ser + beni + oneri (senza comp e per)
+  const baseIrapCalc=ricavi+mat+matc+ser+beni+oneri; // comp non incluso (ripresa fiscale)
+
+  if(fiscalRegime==='srl'){
+    const utEl=document.getElementById('srl_utile');
+    const vpEl=document.getElementById('srl_vp');
+    const compEl=document.getElementById('srl_comp_amm');
+    if(utEl) utEl.value=fmtNum(Math.max(0,ebt));
+    if(vpEl) vpEl.value=fmtNum(Math.max(0,baseIrapCalc));
+    if(compEl) compEl.value=fmtNum(Math.abs(comp)); // auto dal CE
+    calcSrl();
+  } else {
+    const rdEl=document.getElementById('irpef_reddito');
+    if(rdEl) rdEl.value=fmtNum(Math.max(0,ebt));
+    calcEnpamIrpef();
+    // Aggiorna KPI IRPEF stimata
+    const redAnno=ebt*4;
+    const res=calcIrpef(Math.max(0,redAnno));
+    const irpefEl=document.getElementById('kpi_irpef_stimata');
+    if(irpefEl) irpefEl.textContent=fmtNum(res.imp);
+    const aliqEl=document.getElementById('kpi_irpef_aliq');
+    if(aliqEl) aliqEl.textContent=redAnno>0?'Aliq. eff. '+(res.imp/redAnno*100).toFixed(1)+'%':'—';
+  }
+  // Aggiorna sezione cumulativa
+  renderCumulativo();
+}
+
+// ═══ MARGINALITÀ ASA ═══
+function syncASAFromCE(){
+  const g=(group)=>ceVoci.find(v=>v.group===group)||{val:0};
+  const affitto=Math.abs(g('beni').val);
+  const amm=Math.abs(g('amm').val);
+  const utenze=Math.round(Math.abs(g('ser').val)*0.3);
+  const elA=document.getElementById('asa_fissi_affitto');
+  const elM=document.getElementById('asa_fissi_amm');
+  const elU=document.getElementById('asa_fissi_utenze');
+  if(elA)elA.value=fmtNum(affitto);
+  if(elM)elM.value=fmtNum(amm);
+  if(elU)elU.value=fmtNum(utenze);
+  renderASA();
+}
+
+function getRicaviASA(asaId){
+  const keywords={
+    igiene:['igiene'],conserv:['conserv','carie'],endo:['endo'],
+    chirurgia:['chirurg'],orto:['orto'],protesi:['protesi'],
+    implanto:['implant'],pedo:['pedo','pediatr']
+  };
+  const kws=keywords[asaId]||[];
+  const branch=branche.find(b=>kws.some(k=>b.label.toLowerCase().includes(k)));
+  return branch?branch.val:0;
+}
+
+function renderASA(){
+  const tbody=document.getElementById('asa-tbody');
+  const tfoot=document.getElementById('asa-tfoot');
+  if(!tbody)return;
+
+  const affitto=parseNum((document.getElementById('asa_fissi_affitto')||{}).value||'0');
+  const amm=parseNum((document.getElementById('asa_fissi_amm')||{}).value||'0');
+  const utenze=parseNum((document.getElementById('asa_fissi_utenze')||{}).value||'0');
+  const totFissi=affitto+amm+utenze;
+  const elTot=document.getElementById('asa_fissi_tot');
+  if(elTot)elTot.textContent='€ '+fmtNum(totFissi);
+
+  const fatTot=branche.reduce((s,b)=>s+b.val,0);
+
+  tbody.innerHTML='';
+  let totRic=0,totMat=0,totCollab=0,totMDC=0,totFissiUsati=0,totNetto=0;
+
+  asaList.forEach(a=>{
+    const d=asaData[a.id];
+    const ric=getRicaviASA(a.id);
+    const matVal=d.matMode==='pct'?ric*(d.mat/100):d.mat;
+    const collabVal=d.collabMode==='pct'?ric*(d.collab/100):d.collab;
+    const mdc=ric-matVal-collabVal;
+    const quotaFissi=fatTot>0?totFissi*(ric/fatTot):0;
+    const netto=mdc-quotaFissi;
+    const mdcPct=ric>0?(mdc/ric*100):0;
+    const nettoPct=ric>0?(netto/ric*100):0;
+
+    totRic+=ric;totMat+=matVal;totCollab+=collabVal;
+    totMDC+=mdc;totFissiUsati+=quotaFissi;totNetto+=netto;
+
+    const mdcColor=mdcPct>40?'var(--green)':mdcPct>20?'var(--amber)':'var(--red)';
+    const nettoColor=nettoPct>20?'var(--green)':nettoPct>5?'var(--amber)':'var(--red)';
+
+    const tr=document.createElement('tr');
+    tr.style.borderBottom='1px solid var(--border)';
+    tr.innerHTML=`
+      <td style="padding:10px 12px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:10px;height:10px;border-radius:50%;background:${a.color};flex-shrink:0"></div>
+          <span style="font-size:13px;font-weight:600">${a.label}</span>
+        </div>
+        ${ric===0?'<div style="font-size:10px;color:var(--text3);margin-top:2px">⚠ Aggiungi branca in Produzione</div>':''}
+      </td>
+      <td style="padding:10px 12px;text-align:right;font-family:\'Nunito\',sans-serif;font-weight:700">€ ${fmtNum(ric)}</td>
+      <td style="padding:10px 12px">
+        <div style="display:flex;align-items:center;gap:6px;justify-content:center">
+          <input type="text" value="${d.matMode==='imp'?fmtNum(d.mat):d.mat}" data-asa="${a.id}" data-field="mat"
+            style="width:70px;text-align:right;background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:4px 6px;font-size:12px;font-weight:700;outline:none;font-family:\'Outfit\',sans-serif"
+            oninput="asaData['${a.id}'].mat=parseNum(this.value)||parseFloat(this.value)||0;renderASA()"
+            onblur="if(asaData['${a.id}'].matMode==='imp')this.value=fmtNum(asaData['${a.id}'].mat)">
+          <select onchange="asaData['${a.id}'].matMode=this.value;renderASA()"
+            style="font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:3px 5px;outline:none;color:var(--text2)">
+            <option value="imp" ${d.matMode==='imp'?'selected':''}>€</option>
+            <option value="pct" ${d.matMode==='pct'?'selected':''}>%</option>
+          </select>
+        </div>
+        <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:2px">= € ${fmtNum(Math.round(matVal))}</div>
+      </td>
+      <td style="padding:10px 12px">
+        <div style="display:flex;align-items:center;gap:6px;justify-content:center">
+          <input type="text" value="${d.collabMode==='imp'?fmtNum(d.collab):d.collab}" data-asa="${a.id}"
+            style="width:70px;text-align:right;background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:4px 6px;font-size:12px;font-weight:700;outline:none;font-family:\'Outfit\',sans-serif"
+            oninput="asaData['${a.id}'].collab=parseNum(this.value)||parseFloat(this.value)||0;renderASA()"
+            onblur="if(asaData['${a.id}'].collabMode==='imp')this.value=fmtNum(asaData['${a.id}'].collab)">
+          <select onchange="asaData['${a.id}'].collabMode=this.value;renderASA()"
+            style="font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:3px 5px;outline:none;color:var(--text2)">
+            <option value="imp" ${d.collabMode==='imp'?'selected':''}>€</option>
+            <option value="pct" ${d.collabMode==='pct'?'selected':''}>%</option>
+          </select>
+        </div>
+        <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:2px">= € ${fmtNum(Math.round(collabVal))}</div>
+      </td>
+      <td style="padding:10px 12px;text-align:right;font-family:\'Nunito\',sans-serif;font-weight:800;font-size:14px;color:${mdcColor}">€ ${fmtNum(Math.round(mdc))}</td>
+      <td style="padding:10px 12px;text-align:right;font-size:12px;font-weight:700;color:${mdcColor}">${mdcPct.toFixed(1)}%</td>
+      <td style="padding:10px 12px;text-align:right;font-size:12px;font-weight:600;color:var(--text3)">€ ${fmtNum(Math.round(quotaFissi))}</td>
+      <td style="padding:10px 12px;text-align:right;font-family:\'Nunito\',sans-serif;font-weight:800;font-size:14px;color:${nettoColor}">€ ${fmtNum(Math.round(netto))}</td>
+      <td style="padding:10px 12px;text-align:right;font-size:12px;font-weight:700;color:${nettoColor}">${nettoPct.toFixed(1)}%</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const totMDCpct=totRic>0?(totMDC/totRic*100):0;
+  const totNettoPct=totRic>0?(totNetto/totRic*100):0;
+  tfoot.innerHTML=`<tr style="background:var(--teal-light);font-weight:800;border-top:2px solid var(--teal-mid)">
+    <td style="padding:11px 12px;font-size:13px;color:var(--teal-dark)">TOTALE</td>
+    <td style="padding:11px 12px;text-align:right;font-family:'Nunito',sans-serif;color:var(--teal-dark)">€ ${fmtNum(Math.round(totRic))}</td>
+    <td style="padding:11px 12px;text-align:center;font-size:12px;color:var(--text2)">€ ${fmtNum(Math.round(totMat))}</td>
+    <td style="padding:11px 12px;text-align:center;font-size:12px;color:var(--text2)">€ ${fmtNum(Math.round(totCollab))}</td>
+    <td style="padding:11px 12px;text-align:right;font-family:'Nunito',sans-serif;color:var(--teal-dark);font-size:15px">€ ${fmtNum(Math.round(totMDC))}</td>
+    <td style="padding:11px 12px;text-align:right;font-size:12px;color:var(--teal-dark)">${totMDCpct.toFixed(1)}%</td>
+    <td style="padding:11px 12px;text-align:right;font-size:12px;color:var(--text2)">€ ${fmtNum(Math.round(totFissiUsati))}</td>
+    <td style="padding:11px 12px;text-align:right;font-family:'Nunito',sans-serif;color:var(--blue);font-size:15px">€ ${fmtNum(Math.round(totNetto))}</td>
+    <td style="padding:11px 12px;text-align:right;font-size:12px;color:var(--blue)">${totNettoPct.toFixed(1)}%</td>
+  </tr>`;
+
+  renderASABars();
+  renderASAInsight();
+}
+
+function renderASABars(){
+  const fatTot=branche.reduce((s,b)=>s+b.val,0);
+  const fissi=parseNum((document.getElementById('asa_fissi_affitto')||{}).value||'0')+
+              parseNum((document.getElementById('asa_fissi_amm')||{}).value||'0')+
+              parseNum((document.getElementById('asa_fissi_utenze')||{}).value||'0');
+  ['asa-mdc-bars','asa-netto-bars'].forEach(cid=>{
+    const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
+    const isMDC=cid.includes('mdc');
+    const vals=asaList.map(a=>{
+      const d=asaData[a.id];
+      const ric=getRicaviASA(a.id);if(!ric)return null;
+      const matVal=d.matMode==='pct'?ric*(d.mat/100):d.mat;
+      const collabVal=d.collabMode==='pct'?ric*(d.collab/100):d.collab;
+      const mdc=ric-matVal-collabVal;
+      const quota=fatTot>0?fissi*(ric/fatTot):0;
+      return {label:a.label,val:isMDC?mdc:mdc-quota,color:a.color};
+    }).filter(Boolean);
+    const mx=Math.max(...vals.map(x=>Math.abs(x.val)),1);
+    vals.forEach(v=>{
+      const pct=Math.abs(v.val)/mx*100;
+      const pos=v.val>=0;
+      const row=document.createElement('div');row.className='bar-row';
+      row.innerHTML=`<span class="bar-label" style="font-size:11px">${v.label}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${pos?v.color:'var(--red)'}"></div></div>
+        <span class="bar-val" style="color:${pos?'var(--text)':'var(--red)'}">${pos?'':'–'}€ ${fmtNum(Math.round(Math.abs(v.val)))}</span>`;
+      c.appendChild(row);
+    });
+  });
+}
+
+function renderASAInsight(){
+  const el=document.getElementById('asa-insight');if(!el)return;
+  const fatTot=branche.reduce((s,b)=>s+b.val,0);
+  const fissi=parseNum((document.getElementById('asa_fissi_affitto')||{}).value||'0')+
+              parseNum((document.getElementById('asa_fissi_amm')||{}).value||'0')+
+              parseNum((document.getElementById('asa_fissi_utenze')||{}).value||'0');
+  const ranks=asaList.map(a=>{
+    const d=asaData[a.id];
+    const ric=getRicaviASA(a.id);if(!ric)return null;
+    const matVal=d.matMode==='pct'?ric*(d.mat/100):d.mat;
+    const collabVal=d.collabMode==='pct'?ric*(d.collab/100):d.collab;
+    const mdc=ric-matVal-collabVal;
+    const quota=fatTot>0?fissi*(ric/fatTot):0;
+    const netto=mdc-quota;
+    return {label:a.label,pct:ric>0?netto/ric*100:0,netto};
+  }).filter(Boolean).sort((a,b)=>b.pct-a.pct);
+  if(!ranks.length){el.innerHTML='';return;}
+  const best=ranks[0],worst=ranks[ranks.length-1];
+  el.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div style="background:#e8f5e9;border:1.5px solid var(--green);border-radius:10px;padding:14px 18px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--green);margin-bottom:6px">🏆 ASA più redditizia</div>
+      <div style="font-size:20px;font-weight:800;color:var(--green)">${best.label}</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:4px">Margine netto: <strong>${best.pct.toFixed(1)}%</strong> — € ${fmtNum(Math.round(best.netto))}</div>
+    </div>
+    <div style="background:#fef2f2;border:1.5px solid var(--red);border-radius:10px;padding:14px 18px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--red);margin-bottom:6px">⚠️ ASA da monitorare</div>
+      <div style="font-size:20px;font-weight:800;color:var(--red)">${worst.label}</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:4px">Margine netto: <strong>${worst.pct.toFixed(1)}%</strong> — € ${fmtNum(Math.round(worst.netto))}</div>
+    </div>
+  </div>`;
+}
+
+
+// ═══ MAPPING CONTI ═══
+// Struttura: [{codice:'900020', desc:'ASA Igiene acq.', campo:'asa_mat', asa:'igiene'}, ...]
+// campo: 'ce_ricavi','ce_mat','ce_matc','ce_ser','ce_comp','ce_beni','ce_per','ce_amm','ce_sval',
+//        'ce_provfin','ce_onfin','ce_oneri','branca','asa_mat','asa_collab','kpi_fat','skip'
+let contoMapping=[];
+
+// Mapping predefinito basato sul piano dei conti standard studi dentistici
+// 'fisso':true = uguale per tutti gli studi, non toccare
+// 'fisso':false = collaboratori/conti variabili per studio, da configurare
+const DEFAULT_MAPPING = [
+  // ── RICAVI ASA (80) ──
+  {codice:'800020', desc:'Asa Igiene',                        campo:'branca',    asa:'igiene',    fisso:true},
+  {codice:'800021', desc:'Asa Conservativa (otturazione/endo)',campo:'branca',    asa:'conserv',   fisso:true},
+  {codice:'800022', desc:'Asa Ortodonzia',                    campo:'branca',    asa:'orto',      fisso:true},
+  {codice:'800023', desc:'Asa Protesi',                       campo:'branca',    asa:'protesi',   fisso:true},
+  {codice:'800024', desc:'Asa diagnostica/Radiografia',       campo:'branca',    asa:'diag',      fisso:true},
+  {codice:'800025', desc:'Asa Chirurgia',                     campo:'branca',    asa:'chirurgia', fisso:true},
+  {codice:'800028', desc:'Asa prestazioni mediche/Implanto',  campo:'branca',    asa:'implanto',  fisso:true},
+  {codice:'800029', desc:'Asa Parodontologia',                campo:'branca',    asa:'paro',      fisso:true},
+  // ── MATERIALI ASA (900020-900037) ──
+  {codice:'900020', desc:'ASA Igiene acq. materiale',         campo:'asa_mat',   asa:'igiene',    fisso:true},
+  {codice:'900021', desc:'ASA odontoiatria acq. materiale',   campo:'asa_mat',   asa:'conserv',   fisso:true},
+  {codice:'900022', desc:'ASA conservativa acq. materiale',   campo:'asa_mat',   asa:'conserv',   fisso:true},
+  {codice:'900023', desc:'ASA ortodonzia acq. materiale',     campo:'asa_mat',   asa:'orto',      fisso:true},
+  {codice:'900036', desc:'ASA Radiografia acq. materiale',    campo:'asa_mat',   asa:'chirurgia', fisso:true},
+  {codice:'900037', desc:'ASA Chirurgia acq. materiale',      campo:'asa_mat',   asa:'chirurgia', fisso:true},
+  {codice:'900013', desc:'ASA parodontologia acq. materiale', campo:'asa_mat',   asa:'paro',      fisso:true},
+  // ── MATERIALI GENERICI → CE mat ──
+  {codice:'900002', desc:'Acquisti di materiali di consumo',  campo:'ce_matc',   asa:'',          fisso:true},
+  {codice:'900004', desc:'Beni di valore inferiore 516,46',   campo:'ce_matc',   asa:'',          fisso:true},
+  {codice:'900005', desc:'Materiale di pulizia',              campo:'ce_matc',   asa:'',          fisso:true},
+  {codice:'900007', desc:'Cancelleria',                       campo:'ce_matc',   asa:'',          fisso:true},
+  {codice:'900030', desc:'Materiale sanificazione',           campo:'ce_matc',   asa:'',          fisso:true},
+  {codice:'900031', desc:'Dispositivi di protezione',         campo:'ce_matc',   asa:'',          fisso:true},
+  {codice:'900081', desc:'Medicinali',                        campo:'ce_mat',    asa:'',          fisso:true},
+  // ── SERVIZI (901000-901048) → CE servizi ──
+  {codice:'901000', desc:'Manutenzioni e riparazioni',        campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901001', desc:'Energia elettrica',                 campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901003', desc:'Acqua potabile',                    campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901004', desc:'Gas',                               campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901005', desc:'Spese telefoniche',                 campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901011', desc:'Servizi di vigilanza',              campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901015', desc:'Servizi vari commerciali',          campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901018', desc:'Manutenzione beni di terzi',        campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901019', desc:'Spese pubblicitarie',               campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901021', desc:'Spese legali e notarili',           campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901022', desc:'Assicurazioni',                     campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901025', desc:'Spese di ricerca e formazione',     campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901026', desc:'Spese per servizi bancari',         campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901041', desc:'Pec',                               campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901043', desc:'Canone ass. software',              campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901044', desc:'Servizio smaltimento rifiuti',      campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901046', desc:'Consulenze professionali',          campo:'ce_ser',    asa:'',          fisso:true},
+  {codice:'901058', desc:'Spese condominiali',                campo:'ce_ser',    asa:'',          fisso:true},
+  // ── COMPENSO AMMINISTRATORE ──
+  {codice:'901027', desc:'Compensi agli Amministratori',      campo:'ce_comp',   asa:'',          fisso:true},
+  // ── COLLABORATORI ASA (variabili per studio) ──
+  {codice:'901049', desc:'Asa ortodonzia — collaboratore',    campo:'asa_collab',asa:'orto',      fisso:false},
+  {codice:'901050', desc:'Asa Igiene — collaboratore 1',      campo:'asa_collab',asa:'igiene',    fisso:false},
+  {codice:'901051', desc:'Asa Igiene — collaboratore 2',      campo:'asa_collab',asa:'igiene',    fisso:false},
+  {codice:'901053', desc:'Asa collab. generico',              campo:'asa_collab',asa:'conserv',   fisso:false},
+  {codice:'901054', desc:'Asa Igiene — collaboratore 3',      campo:'asa_collab',asa:'igiene',    fisso:false},
+  {codice:'901055', desc:'Asa Igiene — collaboratore 4',      campo:'asa_collab',asa:'igiene',    fisso:false},
+  {codice:'901060', desc:'ASA odontotecnico',                 campo:'asa_collab',asa:'protesi',   fisso:false},
+  {codice:'901064', desc:'Costo collaboratore generico',      campo:'asa_collab',asa:'conserv',   fisso:false},
+  {codice:'901065', desc:'Costo laboratorio',                 campo:'asa_collab',asa:'protesi',   fisso:false},
+  {codice:'901066', desc:'Asa chirurgia — collaboratore',     campo:'asa_collab',asa:'chirurgia', fisso:false},
+  // ── GODIMENTO BENI DI TERZI (902000-902003) ──
+  {codice:'902000', desc:'Affitti e locazioni',               campo:'ce_beni',   asa:'',          fisso:true},
+  {codice:'902001', desc:'Leasing operativo/finanziario',     campo:'ce_beni',   asa:'',          fisso:true},
+  {codice:'902002', desc:'Royalties',                         campo:'ce_beni',   asa:'',          fisso:true},
+  {codice:'902003', desc:'Canoni di noleggio',                campo:'ce_beni',   asa:'',          fisso:true},
+  // ── PERSONALE (903000-903013) ──
+  {codice:'903000', desc:'Stipendi e salari',                 campo:'ce_per',    asa:'',          fisso:true},
+  {codice:'903002', desc:'Contributi su stipendi',            campo:'ce_per',    asa:'',          fisso:true},
+  {codice:'903004', desc:'Accantonamento TFR',                campo:'ce_per',    asa:'',          fisso:true},
+  {codice:'903009', desc:'Accordo transazione dipendenti',    campo:'ce_per',    asa:'',          fisso:true},
+  {codice:'903013', desc:'Rimborso spese dipendenti',         campo:'ce_per',    asa:'',          fisso:true},
+  // ── AMMORTAMENTI (904000-904050) ──
+  {codice:'904019', desc:'Amm. impianti speciali',            campo:'ce_amm',    asa:'',          fisso:true},
+  {codice:'904020', desc:'Amm. macchinari',                   campo:'ce_amm',    asa:'',          fisso:true},
+  {codice:'904022', desc:'Amm. attrezzatura',                 campo:'ce_amm',    asa:'',          fisso:true},
+  {codice:'904023', desc:'Amm. mobili e arredi',              campo:'ce_amm',    asa:'',          fisso:true},
+  {codice:'904024', desc:'Amm. macchine ufficio',             campo:'ce_amm',    asa:'',          fisso:true},
+  {codice:'904048', desc:'Amm. telefono',                     campo:'ce_amm',    asa:'',          fisso:true},
+  {codice:'904049', desc:'Amm. arredamento',                  campo:'ce_amm',    asa:'',          fisso:true},
+  {codice:'904050', desc:'Amm. beni inferiori',               campo:'ce_amm',    asa:'',          fisso:true},
+  // ── ONERI DIVERSI (908000-908027) ──
+  {codice:'908001', desc:'Omaggi e regalie',                  campo:'ce_oneri',  asa:'',          fisso:true},
+  {codice:'908004', desc:'Imposta di registro',               campo:'ce_oneri',  asa:'',          fisso:true},
+  {codice:'908007', desc:'Altre imposte e tasse',             campo:'ce_oneri',  asa:'',          fisso:true},
+  {codice:'908011', desc:'Altri oneri di gestione',           campo:'ce_oneri',  asa:'',          fisso:true},
+  {codice:'908019', desc:'Tassa vidimazione libri sociali',   campo:'ce_oneri',  asa:'',          fisso:true},
+  {codice:'908020', desc:'Tassa sui rifiuti',                 campo:'ce_oneri',  asa:'',          fisso:true},
+  {codice:'908022', desc:'Diritto camerale',                  campo:'ce_oneri',  asa:'',          fisso:true},
+  // ── ONERI FINANZIARI (910000-910008) ──
+  {codice:'910006', desc:'Spese di incasso',                  campo:'ce_onfin',  asa:'',          fisso:true},
+  {codice:'910007', desc:'Spese diverse bancarie',            campo:'ce_onfin',  asa:'',          fisso:true},
+  {codice:'910008', desc:'Interessi passivi',                 campo:'ce_onfin',  asa:'',          fisso:true},
+];
+
+function initMapping(){
+  // Carica DEFAULT_MAPPING in contoMapping se è vuoto
+  if(contoMapping.length===0){
+    contoMapping=DEFAULT_MAPPING.map(r=>({...r}));
+  }
+}
+
+
+const CAMPI_OPTIONS=[
+  {v:'skip',         l:'— Ignora —'},
+  {v:'branca',       l:'Branca (Ricavi)'},
+  {v:'kpi_fat',      l:'KPI Fatturato totale'},
+  {v:'ce_ricavi',    l:'CE · Ricavi da prestazioni'},
+  {v:'ce_mat',       l:'CE · Costi materiali odont.'},
+  {v:'ce_matc',      l:'CE · Costi materiali consumo'},
+  {v:'ce_ser',       l:'CE · Costi per servizi'},
+  {v:'ce_comp',      l:'CE · Compenso amm./titolare'},
+  {v:'ce_beni',      l:'CE · Godimento beni di terzi'},
+  {v:'ce_per',       l:'CE · Costo del personale'},
+  {v:'ce_amm',       l:'CE · Ammortamenti'},
+  {v:'ce_sval',      l:'CE · Svalutazioni/Accant.'},
+  {v:'ce_oneri',     l:'CE · Altri oneri di gestione'},
+  {v:'ce_provfin',   l:'CE · Proventi finanziari'},
+  {v:'ce_onfin',     l:'CE · Oneri finanziari'},
+  {v:'asa_mat',      l:'ASA · Materiali'},
+  {v:'asa_collab',   l:'ASA · Collaboratore'},
+];
+const ASA_OPTIONS=[
+  {v:'',          l:'— nessuna —'},
+  {v:'igiene',    l:'Igiene'},
+  {v:'conserv',   l:'Conservativa/Carie'},
+  {v:'endo',      l:'Endodonzia'},
+  {v:'chirurgia', l:'Chirurgia orale'},
+  {v:'orto',      l:'Ortodonzia'},
+  {v:'protesi',   l:'Protesi'},
+  {v:'implanto',  l:'Implantologia'},
+  {v:'pedo',      l:'Pedodonzia'},
+];
+
+function apriMapping(){
+  document.getElementById('mapping-modal').classList.add('open');
+  renderMappingTable();
+}
+function chiudiMapping(){document.getElementById('mapping-modal').classList.remove('open');}
+
+function campiSelect(selected){
+  return CAMPI_OPTIONS.map(o=>`<option value="${o.v}" ${selected===o.v?'selected':''}>${o.l}</option>`).join('');
+}
+function asaSelect(selected){
+  return ASA_OPTIONS.map(o=>`<option value="${o.v}" ${selected===o.v?'selected':''}>${o.l}</option>`).join('');
+}
+
+function renderMappingTable(){
+  const tbody=document.getElementById('mapping-tbody');
+  if(!tbody)return;
+  tbody.innerHTML='';
+  contoMapping.forEach((row,i)=>{
+    const tr=document.createElement('tr');
+    tr.style.borderBottom='1px solid var(--border)';
+    tr.style.background=row.fisso===false?'#fffbf0':'';
+    tr.innerHTML=`
+      <td style="padding:7px 10px">
+        <input type="text" value="${row.codice}" style="width:80px;background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:4px 7px;font-size:12px;font-weight:700;font-family:'Outfit',sans-serif;outline:none"
+          oninput="contoMapping[${i}].codice=this.value.replace(/\s/g,'')">
+      </td>
+      <td style="padding:7px 10px;font-size:12px;color:var(--text2);max-width:200px" title="${row.desc}">
+        ${row.desc}
+        ${row.fisso===false?'<span style="font-size:9px;background:var(--amber-light);color:#8a6020;padding:1px 6px;border-radius:8px;font-weight:700;margin-left:4px">da configurare</span>':''}
+      </td>
+      <td style="padding:7px 10px">
+        <select style="font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:4px 7px;outline:none;width:100%"
+          onchange="contoMapping[${i}].campo=this.value;renderMappingTable()">
+          ${campiSelect(row.campo)}
+        </select>
+      </td>
+      <td style="padding:7px 10px">
+        ${(row.campo==='asa_mat'||row.campo==='asa_collab'||row.campo==='branca')?
+        `<select style="font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:4px 7px;outline:none;width:100%"
+          onchange="contoMapping[${i}].asa=this.value">
+          ${asaSelect(row.asa)}
+        </select>`:'<span style="color:var(--text3);font-size:11px">—</span>'}
+      </td>
+      <td style="padding:7px 10px;text-align:center">
+        <button onclick="contoMapping.splice(${i},1);renderMappingTable()" class="del-btn">×</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function aggiungiRigaMapping(){
+  contoMapping.push({codice:'',desc:'',campo:'skip',asa:''});
+  renderMappingTable();
+}
+
+function caricaContiDaCSV(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const raw=e.target.result;
+    const lines=raw.split('\n');
+    const nuovi=[];
+    lines.forEach(line=>{
+      const parts=line.split(';');
+      // Parse lato COSTI (col 0,1,2) e lato RICAVI (col 3,4,5)
+      const sides=[
+        {codRaw:(parts[0]||'').trim(), desc:(parts[1]||'').trim(), saldoRaw:(parts[2]||'').trim()},
+        {codRaw:(parts[3]||'').trim(), desc:(parts[4]||'').trim(), saldoRaw:(parts[5]||'').trim()},
+      ];
+      sides.forEach(({codRaw,desc,saldoRaw})=>{
+        if(!codRaw||!desc||!saldoRaw)return;
+        const cod=codRaw.replace(/\s/g,'');
+        if(cod.length<4)return;
+        const saldo=parseNum(saldoRaw);
+        if(!saldo&&saldo!==0)return;
+        if(contoMapping.find(r=>r.codice===cod))return;
+        // Auto-suggerisci fisso/variabile
+        const isCollab=desc.toLowerCase().includes('asa ')&&(desc.toLowerCase().includes('igiene')||desc.toLowerCase().includes('chirurgia')||desc.toLowerCase().includes('orto')||desc.toLowerCase().includes('collab'));
+        nuovi.push({codice:cod, desc:desc, campo:'skip', asa:'', fisso:!isCollab});
+      });
+    });
+    contoMapping.push(...nuovi);
+    renderMappingTable();
+    alert(nuovi.length+' conti caricati. Assegna il campo cruscotto per ciascuno.');
+  };
+  reader.readAsText(file,'utf-8');
+}
+
+function salvaMapping(){
+  chiudiMapping();
+  alert('Mapping salvato. Verrà applicato al prossimo import e incluso nel salvataggio del file.');
+}
+
+// ═══ IMPORT BILANCIO ═══
+function importaBilancio(){
+  const file=document.getElementById('import-file-bilancio').files[0];
+  if(!file){alert('Seleziona un file CSV.');return;}
+  if(contoMapping.length===0){alert('Configura prima il mapping conti (⚙️ Mapping Conti).');return;}
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const lines=e.target.result.split('\n');
+    // Parse all rows into {cod, desc, saldo}
+    const rows=[];
+    lines.forEach(line=>{
+      const parts=line.split(';');
+      if(parts.length<3)return;
+      const codRaw=parts[0].trim();
+      const desc=(parts[1]||'').trim();
+      const saldoRaw=(parts[2]||'').trim();
+      if(!codRaw||!saldoRaw)return;
+      const cod=codRaw.replace(/\s/g,'');
+      const saldo=parseNum(saldoRaw);
+      if(isNaN(saldo)||!desc)return;
+      rows.push({cod,desc,saldo});
+    });
+
+    // Accumulatori per ogni campo CE
+    const ceAcc={ricavi:0,mat:0,matc:0,ser:0,comp:0,beni:0,per:0,amm:0,sval:0,oneri:0,provfin:0,onfin:0};
+    const brancheAcc={}; // {label: saldo}
+    const asaMatAcc={};  // {asaId: saldo}
+    const asaCollabAcc={}; // {asaId: saldo}
+    let fatturato=0;
+
+    rows.forEach(r=>{
+      const map=contoMapping.find(m=>m.codice===r.cod);
+      if(!map||map.campo==='skip')return;
+      const v=Math.abs(r.saldo);
+      switch(map.campo){
+        case 'ce_ricavi': ceAcc.ricavi+=v; break;
+        case 'ce_mat':    ceAcc.mat+=v; break;
+        case 'ce_matc':   ceAcc.matc+=v; break;
+        case 'ce_ser':    ceAcc.ser+=v; break;
+        case 'ce_comp':   ceAcc.comp+=v; break;
+        case 'ce_beni':   ceAcc.beni+=v; break;
+        case 'ce_per':    ceAcc.per+=v; break;
+        case 'ce_amm':    ceAcc.amm+=v; break;
+        case 'ce_sval':   ceAcc.sval+=v; break;
+        case 'ce_oneri':  ceAcc.oneri+=v; break;
+        case 'ce_provfin':ceAcc.provfin+=v; break;
+        case 'ce_onfin':  ceAcc.onfin+=v; break;
+        case 'kpi_fat':   fatturato+=v; break;
+        case 'branca':
+          if(map.asa){
+            const asaObj=asaList.find(a=>a.id===map.asa);
+            const lbl=asaObj?asaObj.label:map.desc;
+            brancheAcc[lbl]=(brancheAcc[lbl]||0)+v;
+          } break;
+        case 'asa_mat':
+          if(map.asa) asaMatAcc[map.asa]=(asaMatAcc[map.asa]||0)+v; break;
+        case 'asa_collab':
+          if(map.asa) asaCollabAcc[map.asa]=(asaCollabAcc[map.asa]||0)+v; break;
+      }
+    });
+
+    // Apply to CE
+    const setce=(group,val,isCost)=>{const v=ceVoci.find(x=>x.group===group);if(v)v.val=isCost?-val:val;};
+    if(ceAcc.ricavi)  setce('ricavi',ceAcc.ricavi,false);
+    if(ceAcc.mat)     setce('mat',ceAcc.mat,true);
+    if(ceAcc.matc)    setce('matc',ceAcc.matc,true);
+    if(ceAcc.ser)     setce('ser',ceAcc.ser,true);
+    if(ceAcc.comp)    setce('comp',ceAcc.comp,true);
+    if(ceAcc.beni)    setce('beni',ceAcc.beni,true);
+    if(ceAcc.per)     setce('per',ceAcc.per,true);
+    if(ceAcc.amm)     setce('amm',ceAcc.amm,true);
+    if(ceAcc.sval)    setce('sval',ceAcc.sval,true);
+    if(ceAcc.oneri)   setce('oneri',ceAcc.oneri,true);
+    if(ceAcc.provfin) setce('provfin',ceAcc.provfin,false);
+    if(ceAcc.onfin)   setce('onfin',ceAcc.onfin,true);
+
+    // Apply to Branche
+    Object.entries(brancheAcc).forEach(([lbl,val])=>{
+      const b=branche.find(x=>x.label===lbl);
+      if(b)b.val=val; else branche.push({label:lbl,val,color:'#8aa4b8'});
+    });
+
+    // Apply to KPI fatturato (se non mappato esplicitamente, somma ricavi branche)
+    const fatBranche=Object.values(brancheAcc).reduce((s,v)=>s+v,0);
+    const fatFinale=fatturato||ceAcc.ricavi||fatBranche;
+    if(fatFinale){
+      const el=document.getElementById('kpi_fat');
+      if(el)el.value=fmtNum(fatFinale);
+    }
+
+    // Apply to ASA
+    Object.entries(asaMatAcc).forEach(([asaId,val])=>{
+      if(asaData[asaId]){asaData[asaId].mat=val;asaData[asaId].matMode='imp';}
+    });
+    Object.entries(asaCollabAcc).forEach(([asaId,val])=>{
+      if(asaData[asaId]){asaData[asaId].collab=val;asaData[asaId].collabMode='imp';}
+    });
+
+    // Re-render everything
+    renderBranche();renderCE();calcKpiDeltas();
+    syncFatToRicavi();syncASAFromCE();renderASA();
+    chiudiImport();
+
+    // Summary
+    const nMappati=rows.filter(r=>contoMapping.find(m=>m.codice===r.cod&&m.campo!=='skip')).length;
+    const nTot=rows.length;
+    alert(`✅ Importazione completata!\n\n${nMappati} conti mappati su ${nTot} righe trovate.\nVerifica i dati nelle sezioni Produzione, Costi & Margini e Marginalità ASA.`);
+  };
+  reader.readAsText(file,'utf-8');
+}
+
+
+// ═══ NOTE & COMMENTI ═══
+const NOTE_AREE=[
+  {id:'produzione', label:'Produzione & Fatturato'},
+  {id:'costi',      label:'Costi & Margini / CE'},
+  {id:'fiscale',    label:'Area Fiscale'},
+  {id:'asa',        label:'Marginalità ASA'},
+  {id:'generale',   label:'Andamento generale'},
+];
+const SEMAFORI=[
+  {v:'verde',   l:'🟢 Positivo',   bg:'#e8f5e9', border:'var(--green)', color:'var(--green)'},
+  {v:'giallo',  l:'🟡 Attenzione', bg:'#fffbf0', border:'var(--amber)', color:'#8a6020'},
+  {v:'rosso',   l:'🔴 Critico',    bg:'#fef2f2', border:'var(--red)',   color:'var(--red)'},
+];
+
+function renderNoteAree(){
+  const grid=document.getElementById('note-aree-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  NOTE_AREE.forEach(area=>{
+    const stato=noteAree[area.id]||{semaforo:'verde',testo:''};
+    const sem=SEMAFORI.find(s=>s.v===stato.semaforo)||SEMAFORI[0];
+    const div=document.createElement('div');
+    div.style.cssText=`background:${sem.bg};border:1.5px solid ${sem.border};border-radius:10px;padding:14px;transition:background .2s,border .2s`;
+    div.innerHTML=`
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <span style="font-size:13px;font-weight:700;color:var(--text);flex:1">${area.label}</span>
+        <div style="display:flex;gap:6px">
+          ${SEMAFORI.map(s=>`<button onclick="noteAree['${area.id}'].semaforo='${s.v}';renderNoteAree()"
+            style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;
+              border:1.5px solid ${s.v===stato.semaforo?s.border:'var(--border)'};
+              background:${s.v===stato.semaforo?s.bg:'var(--surface)'};
+              color:${s.v===stato.semaforo?s.color:'var(--text3)'}">${s.l}</button>`).join('')}
+        </div>
+      </div>
+      <textarea placeholder="Osservazioni per ${area.label.toLowerCase()}..."
+        style="width:100%;min-height:60px;background:rgba(255,255,255,.7);border:1px solid ${sem.border};border-radius:6px;padding:8px 10px;font-size:12px;line-height:1.6;font-family:'Outfit',sans-serif;color:var(--text);outline:none;resize:vertical;box-sizing:border-box"
+        oninput="noteAree['${area.id}'].testo=this.value">${stato.testo}</textarea>`;
+    grid.appendChild(div);
+  });
+}
+
+function renderNoteKPI(){
+  const grid=document.getElementById('note-kpi-grid');
+  if(!grid)return;
+  const fat=parseNum(document.getElementById('kpi_fat').value)||0;
+  const fatPrec=parseNum(document.getElementById('kpi_fat_prec').value)||0;
+  const paz=parseNum(document.getElementById('kpi_paz').value)||0;
+  const g=(group)=>ceVoci.find(v=>v.group===group)||{val:0};
+  const ricavi=g('ricavi').val,mat=g('mat').val,matc=g('matc').val,
+        comp=g('comp').val,beni=g('beni').val,oneri=g('oneri').val,
+        per=g('per').val,amm=g('amm').val,sval=g('sval').val,
+        provfin=g('provfin').val,onfin=g('onfin').val,ser=g('ser').val;
+  const va=ricavi+mat+matc+ser+comp+beni+oneri;
+  const ebitda=va+per;
+  const ebit=ebitda+amm+sval;
+  const ebt=ebit+provfin+onfin;
+  const periodo=document.getElementById('periodoInput').value||'—';
+  const kpis=[
+    {label:'Fatturato trimestre', val:'€ '+fmtNum(fat), delta:fatPrec>0?((fat-fatPrec)/fatPrec*100).toFixed(1)+'% vs prec.':'—'},
+    {label:'Pazienti attivi',     val:paz>0?paz+' paz.':'—', delta:''},
+    {label:'Ricavo per paziente', val:fat>0&&paz>0?'€ '+fmtNum(Math.round(fat/paz)):'—', delta:''},
+    {label:'EBITDA margin',       val:ricavi>0?(ebitda/ricavi*100).toFixed(1)+'%':'—', delta:'benchmark 25–35%'},
+    {label:'EBIT margin',         val:ricavi>0?(ebit/ricavi*100).toFixed(1)+'%':'—', delta:'benchmark 15–25%'},
+    {label:'Utile ante imposte',  val:'€ '+fmtNum(Math.round(ebt)), delta:''},
+    {label:'Incid. materiali',    val:ricavi>0?(Math.abs(mat+matc)/ricavi*100).toFixed(1)+'%':'—', delta:'benchmark 8–12%'},
+    {label:'Incid. personale',    val:ricavi>0?(Math.abs(per)/ricavi*100).toFixed(1)+'%':'—', delta:'benchmark 20–30%'},
+  ];
+  grid.innerHTML='';
+  kpis.forEach((k,i)=>{
+    const savedNote=window._noteKpi&&window._noteKpi[i]||'';
+    const div=document.createElement('div');
+    div.style.cssText='display:grid;grid-template-columns:180px 120px 1fr;gap:12px;align-items:center;padding:10px 14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)';
+    div.innerHTML=`
+      <span style="font-size:12px;font-weight:700;color:var(--text)">${k.label}</span>
+      <span style="font-size:14px;font-weight:800;font-family:'Nunito',sans-serif;color:var(--teal-dark)">${k.val}
+        ${k.delta?`<br><span style="font-size:10px;font-weight:600;color:var(--text3)">${k.delta}</span>`:''}
+      </span>
+      <input type="text" value="${savedNote}" placeholder="Commento..."
+        style="background:white;border:1.5px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;font-family:'Outfit',sans-serif;outline:none;width:100%;box-sizing:border-box"
+        onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border)';if(!window._noteKpi)window._noteKpi={};window._noteKpi[${i}]=this.value">
+    `;
+    grid.appendChild(div);
+  });
+}
+
+function noteFmt(cmd){document.execCommand(cmd);}
+function noteInsert(txt){
+  const el=document.getElementById('note-generale');
+  if(!el)return;
+  el.focus();
+  document.execCommand('insertText',false,txt);
+}
+
+function renderNoteImposte(){
+  const el=document.getElementById('note-imposte-grid');
+  if(!el)return;
+  const periodo=document.getElementById('periodoInput').value||'—';
+  const regime=fiscalRegime==='srl'?'SRL (IRES + IRAP)':'Studio Individuale (IRPEF)';
+  // Leggi valori dal cumulativo
+  const currQIdx=getCurrQIdx();
+  const visRows=cumulRows.slice(0,currQIdx+1);
+  let totReddito=0,totIrap=0,totImposte=0;
+  const irapAliq=parseFloat(document.getElementById('irap_aliq')?document.getElementById('irap_aliq').value:3.9)||3.9;
+  visRows.forEach(r=>{
+    totReddito+=r.reddito;totIrap+=r.irap;
+    if(fiscalRegime==='srl'){
+      totImposte+=Math.round(r.irap*(irapAliq/100)+r.reddito*0.24);
+    } else {
+      const res=calcIrpef(Math.max(0,r.reddito));
+      totImposte+=Math.round(res.imp);
+    }
+  });
+  const enpamAliq=parseFloat(document.getElementById('irpef_enpam_aliq')?document.getElementById('irpef_enpam_aliq').value:9.75)||9.75;
+  const qAEl=document.getElementById('irpef_quota_a');
+  const qA=qAEl?parseNum(qAEl.value)||2640:2640;
+  const enpam=fiscalRegime==='irpef'?Math.round(qA+totReddito*(enpamAliq/100)):0;
+
+  const row=(label,val,sub,highlight)=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;
+      background:${highlight?'var(--teal-light)':'var(--surface2)'};border-radius:8px;margin-bottom:6px;
+      border:1px solid ${highlight?'var(--teal-mid)':'var(--border)'}">
+      <span style="font-size:13px;font-weight:${highlight?'700':'600'};color:${highlight?'var(--teal-dark)':'var(--text)'}">${label}
+        ${sub?`<br><span style="font-size:10px;font-weight:400;color:var(--text3)">${sub}</span>`:''}
+      </span>
+      <span style="font-size:${highlight?'16px':'14px'};font-weight:800;font-family:'Nunito',sans-serif;
+        color:${highlight?'var(--teal-dark)':'var(--red)'}">
+        ${val}
+      </span>
+    </div>`;
+
+  let html2=`<div style="font-size:12px;color:var(--text3);margin-bottom:12px">
+    Periodo: <strong>${periodo}</strong> &nbsp;·&nbsp; Regime: <strong>${regime}</strong>
+    &nbsp;·&nbsp; Trimestri inclusi: <strong>Q1${currQIdx>0?'–Q'+(currQIdx+1):''}</strong>
+  </div>`;
+
+  html2+=row('Reddito / Utile ante imposte cumulativo','&#x20AC; '+fmtNum(totReddito),'Somma dei trimestri del periodo',true);
+  if(fiscalRegime==='srl'){
+    const irap=Math.round(totIrap*(irapAliq/100));
+    const ires=Math.round(totReddito*0.24);
+    html2+=row('IRES (24%)','– &#x20AC; '+fmtNum(ires),'Su utile ante imposte',false);
+    html2+=row('IRAP ('+irapAliq+'%)','– &#x20AC; '+fmtNum(irap),'Su base produzione &#x20AC; '+fmtNum(totIrap),false);
+    html2+=row('Totale IRES + IRAP','– &#x20AC; '+fmtNum(irap+ires),'Carico fiscale societario',false);
+    html2+=row('Utile netto stimato','&#x20AC; '+fmtNum(Math.max(0,totReddito-irap-ires)),'Dopo IRES e IRAP',true);
+  } else {
+    const res=calcIrpef(totReddito);
+    html2+=row('IRPEF (scaglioni progressivi)','– &#x20AC; '+fmtNum(res.imp),'Aliq. eff. '+(totReddito>0?(res.imp/totReddito*100).toFixed(1):0)+'%',false);
+    html2+=row('ENPAM stimata','– &#x20AC; '+fmtNum(enpam),'Quota A &#x20AC; '+fmtNum(qA)+' + Quota B '+enpamAliq+'%',false);
+    html2+=row('Totale carico fiscale + ENPAM','– &#x20AC; '+fmtNum(res.imp+enpam),'',false);
+    html2+=row('Reddito netto disponibile','&#x20AC; '+fmtNum(Math.max(0,totReddito-res.imp-enpam)),'Dopo IRPEF e ENPAM',true);
+  }
+  // Note field
+  html2+=`<textarea placeholder="Commento sulle imposte e raccomandazioni fiscali..."
+    style="width:100%;min-height:70px;margin-top:10px;background:var(--surface2);border:1.5px solid var(--border);
+      border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.6;font-family:'Outfit',sans-serif;
+      color:var(--text);outline:none;resize:vertical;box-sizing:border-box"
+    onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--border)'">${window._noteImposte||''}</textarea>`;
+
+  el.innerHTML=html2;
+  el.querySelector('textarea').oninput=function(){window._noteImposte=this.value;};
+}
+
+function initNoteSection(){
+  const el=document.getElementById('note_data');
+  if(el&&!el.value)el.value=new Date().toISOString().split('T')[0];
+  renderNoteAree();
+  renderNoteKPI();
+  renderNoteImposte();
+}
+
+// ═══ IMPORT CSV ═══
+function apriImport(){document.getElementById('import-modal').classList.add('open');}
+function chiudiImport(){document.getElementById('import-modal').classList.remove('open');}
+function scaricaTemplate(){
+  const csv='Sezione,Voce,Importo\nBranca,Implantologia,48200\nBranca,Ortodonzia,37400\nBranca,Conservativa,28600\nBranca,Protesi,18400\nBranca,Igiene / Prevenzione,8200\nBranca,Endodonzia,3800\nCE,Ricavi da prestazioni,580000\nCE,Costi materiali odontoiatrici,-70000\nCE,Costi materiali di consumo,-15000\nCE,Costi per servizi,-45000\nCE,Compenso amministratori/titolare,-60000\nCE,Godimento beni di terzi,-35000\nCE,Altri oneri di gestione,-8000\nCE,Costo del personale,-150000\nCE,Ammortamenti,-28000\nCE,Svalutazioni e accantonamenti,-5000\nCE,Proventi/oneri finanziari,-3000\nCE,Imposte sul reddito,-20000\nKPI,Fatturato trimestre,144600\nKPI,Fatturato trim. precedente,133200\nKPI,Pazienti attivi,312\nKPI,Pazienti trim. precedente,298';
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='template-cruscotto.csv';a.click();
+}
+function importaFile(){
+  const file=document.getElementById('import-file').files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const lines=e.target.result.split('\n').filter(l=>l.trim()&&!l.startsWith('Sezione'));
+    let errors=0;
+    lines.forEach(line=>{
+      const parts=line.split(',');
+      if(parts.length<3)return;
+      const sez=parts[0].trim(),voce=parts[1].trim(),val=parseFloat(parts[2])||0;
+      if(sez==='Branca'){
+        const b=branche.find(x=>x.label===voce);
+        if(b)b.val=val; else branche.push({label:voce,val,color:'#8aa4b8'});
+      } else if(sez==='CE'){
+        const v=ceVoci.find(x=>x.label===voce);
+        if(v)v.val=val;
+      } else if(sez==='KPI'){
+        if(voce==='Fatturato trimestre'){document.getElementById('kpi_fat').value=fmtNum(val);}
+        else if(voce==='Fatturato trim. precedente'){document.getElementById('kpi_fat_prec').value=fmtNum(val);}
+        else if(voce==='Pazienti attivi'){document.getElementById('kpi_paz').value=fmtNum(val);}
+        else if(voce==='Pazienti trim. precedente'){document.getElementById('prec_paz').value=fmtNum(val);}
+      }
+    });
+    renderBranche();renderCE();calcKpiDeltas();
+    chiudiImport();
+    alert('Importazione completata!');
+  };
+  reader.readAsText(file);
+}
+
+// ═══ AVANZA TRIMESTRE ═══
+function avanzaTrimestre(){
+  if(!confirm('Questo sposterà i dati correnti nel trimestre precedente e preparerà il foglio per il prossimo trimestre. Hai già salvato una copia? Continuare?'))return;
+
+  // ── Salva dati trimestre corrente nel cumulativo fiscale ──
+  const curr=document.getElementById('periodoInput').value;
+  const matchCurr=curr.match(/Q(\d)/);
+  const currQIdx=matchCurr?parseInt(matchCurr[1])-1:0;
+  // Leggi utile ante imposte e base IRAP dal CE
+  const g=(group)=>ceVoci.find(v=>v.group===group)||{val:0};
+  const ricavi=g('ricavi').val,mat=g('mat').val,matc=g('matc').val,ser=g('ser').val,
+        comp=g('comp').val,beni=g('beni').val,oneri=g('oneri').val,
+        per=g('per').val,amm=g('amm').val,sval=g('sval').val,
+        provfin=g('provfin').val,onfin=g('onfin').val;
+  const va=ricavi+mat+matc+ser+comp+beni+oneri;
+  const ebt=va+per+amm+sval+provfin+onfin;
+  const baseIrap=ricavi+mat+matc+ser+beni+oneri;
+  cumulRows[currQIdx]={q:'Q'+(currQIdx+1),reddito:Math.max(0,ebt),irap:Math.max(0,baseIrap),auto:true};
+
+  // Aggiorna storico sparkQ
+  const fatCurr=parseNum(document.getElementById('kpi_fat').value);
+  for(let i=0;i<3;i++) sparkQ[i]=sparkQ[i+1];
+  sparkQ[3]=0;
+  document.getElementById('kpi_fat_prec').value=fmtNum(fatCurr);
+  document.getElementById('kpi_fat').value='0';
+  document.getElementById('prec_paz').value=document.getElementById('kpi_paz').value;
+  document.getElementById('kpi_paz').value='0';
+
+  // Aggiorna label trimestre
+  const matchQ=curr.match(/Q(\d)\s*(\d{4})/);
+  if(matchQ){
+    let q=parseInt(matchQ[1]),y=parseInt(matchQ[2]);
+    q++;if(q>4){q=1;y++;}
+    document.getElementById('periodoInput').value='Q'+q+' '+y;
+    syncPeriodo();
+  }
+  renderSparkQ();calcKpiDeltas();renderCumulativo();
+  alert('Trimestre salvato nel cumulativo fiscale. Pronto per il nuovo trimestre!');
+}
+
+// ═══ SALVA & PDF ═══
+function salva(){
+  const blob=new Blob([document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');
+  const studio=(document.getElementById('s_nome').value||'Studio').replace(/\s+/g,'-');
+  const periodo=document.getElementById('periodoInput').value.replace(/\s/g,'-')||'Q';
+  a.href=URL.createObjectURL(blob);a.download=studio+'_'+periodo+'.html';a.click();
+}
+function stampaPDF(){
+  // Update print header
+  const nome=document.getElementById('s_nome').value||'Studio Odontoiatrico';
+  const piva=document.getElementById('s_piva').value;
+  const ind=document.getElementById('s_indirizzo').value;
+  const forma=document.getElementById('s_forma').value;
+  const periodo=document.getElementById('periodoInput').value;
+  (document.getElementById('ph-nome')||{}).textContent =nome;
+  (document.getElementById('ph-info')||{}).textContent =
+    [forma,piva,ind,'Periodo: '+periodo].filter(Boolean).join('  |  ');
+  // Show all sections for print
+  const sections=document.querySelectorAll('.section');
+  const active=document.querySelector('.section.active');
+  sections.forEach(s=>s.style.display='block');
+  // Small delay to let DOM settle, then print
+  setTimeout(()=>{
+    window.print();
+    setTimeout(()=>{
+      sections.forEach(s=>s.style.display='');
+      if(active)active.style.display='block';
+    },500);
+  },100);
+}
+
+// ═══ INIT ═══
+function init(){
+  renderBranche();renderPoltrone();renderSparkQ();renderCE();
+  initMapping();
+  calcKpiDeltas();calcEnpamIrpef();calcola();renderCumulativo();renderASA();
+  syncPeriodo();updateStudioHeader();
+  document.getElementById('periodoInput').addEventListener('input',syncPeriodo);
+  document.getElementById('s_nome').addEventListener('input',updateStudioHeader);
+}
+init();
+</script>
+
+<!-- MODAL IMPORT -->
+<!-- ═══ MODAL: IMPORT BILANCIO ═══ -->
+<div class="modal-overlay" id="import-modal">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-title">📥 Importa Bilancio da contabilità</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6">
+      Carica il CSV esportato dal tuo software di contabilità (formato: Conto;Descrizione;Saldo).<br>
+      Il software applica il mapping configurato e compila CE, Branche e ASA automaticamente.
+    </p>
+    <div style="background:var(--teal-light);border:1px solid var(--teal-mid);border-radius:8px;padding:11px 14px;font-size:12px;color:var(--teal-dark);margin-bottom:14px;line-height:1.6">
+      📎 Assicurati di aver configurato il mapping conti (pulsante ⚙️ Mapping Conti) prima di importare.<br>
+      Il file CSV deve avere separatore <strong>;</strong> e saldo in formato italiano (es. 1.234,56).
+    </div>
+    <div style="border:2px dashed var(--border2);border-radius:8px;padding:20px;text-align:center;margin-bottom:14px">
+      <div style="font-size:13px;color:var(--text3);margin-bottom:10px">Carica il file CSV del bilancio</div>
+      <input type="file" id="import-file-bilancio" accept=".csv,.txt" style="font-family:'Outfit',sans-serif;font-size:13px;">
+    </div>
+    <div id="import-preview" style="max-height:200px;overflow-y:auto;margin-bottom:14px;display:none">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:8px">Anteprima mapping</div>
+      <div id="import-preview-body"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" onclick="chiudiImport()">Annulla</button>
+      <button class="modal-btn" style="background:var(--surface2);color:var(--text2);border:1.5px solid var(--border)" onclick="anteprima Bilancio()">👁 Anteprima</button>
+      <button class="modal-btn confirm" onclick="importaBilancio()">✓ Importa</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: MAPPING CONTI ═══ -->
+<div class="modal-overlay" id="mapping-modal" style="z-index:1100">
+  <div class="modal" style="max-width:780px;max-height:88vh;overflow-y:auto">
+    <div class="modal-title">⚙️ Configura Mapping Conti</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6">
+      Associa ogni codice conto del tuo piano dei conti a un campo del cruscotto.<br>
+      Il mapping viene salvato nel file HTML e applicato ad ogni import successivo.
+    </p>
+
+    <!-- Carica CSV per auto-popolare -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+      <div style="flex:1;font-size:12px;color:var(--text2)">Carica un CSV di bilancio per auto-popolare la lista dei conti:</div>
+      <input type="file" id="mapping-file-load" accept=".csv" style="font-size:12px;font-family:'Outfit',sans-serif" onchange="caricaContiDaCSV(this)">
+    </div>
+
+    <!-- Tabella mapping -->
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:12px" id="mapping-table">
+        <thead>
+          <tr style="background:var(--surface2)">
+            <th style="padding:9px 10px;text-align:left;border-bottom:2px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)">Codice</th>
+            <th style="padding:9px 10px;text-align:left;border-bottom:2px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)">Descrizione</th>
+            <th style="padding:9px 10px;text-align:left;border-bottom:2px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)">Campo cruscotto</th>
+            <th style="padding:9px 10px;text-align:left;border-bottom:2px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)">ASA (se applicabile)</th>
+            <th style="padding:9px 10px;border-bottom:2px solid var(--border)"></th>
+          </tr>
+        </thead>
+        <tbody id="mapping-tbody"></tbody>
+      </table>
+    </div>
+    <button class="add-btn" style="margin-top:10px" onclick="aggiungiRigaMapping()">+ Aggiungi conto manualmente</button>
+
+    <div class="modal-actions" style="margin-top:16px">
+      <button class="modal-btn cancel" onclick="chiudiMapping()">Chiudi</button>
+      <button class="modal-btn confirm" onclick="salvaMapping()">💾 Salva mapping</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL NUOVO STUDIO -->
+<div class="modal-overlay" id="nuovo-studio-modal">
+  <div class="modal">
+    <div class="modal-title">🦷 Nuovo Studio — Q1</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6">
+      Inserisci i dati identificativi dello studio. Tutti i valori numerici verranno azzerati così puoi partire da zero con i dati reali.
+    </p>
+    <div class="modal-grid">
+      <div class="field-group" style="grid-column:1/-1">
+        <label class="field-label">Denominazione Studio *</label>
+        <input class="field-input" type="text" id="ns_nome" placeholder="es. Studio Dott. Rossi / STP Smile srl">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Partita IVA</label>
+        <input class="field-input" type="text" id="ns_piva" placeholder="IT 00000000000">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Forma giuridica</label>
+        <input class="field-input" type="text" id="ns_forma" placeholder="es. Studio Ind. / STP srl">
+      </div>
+      <div class="field-group" style="grid-column:1/-1">
+        <label class="field-label">Indirizzo</label>
+        <input class="field-input" type="text" id="ns_indirizzo" placeholder="Via Roma 1, 00100 Roma (RM)">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Trimestre di partenza</label>
+        <select class="field-input" id="ns_trimestre">
+          <option value="Q1 2026" selected>Q1 2026</option>
+          <option value="Q2 2026">Q2 2026</option>
+          <option value="Q3 2026">Q3 2026</option>
+          <option value="Q4 2026">Q4 2026</option>
+          <option value="Q1 2025">Q1 2025</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Regime fiscale</label>
+        <select class="field-input" id="ns_regime">
+          <option value="irpef">Studio Individuale / IRPEF</option>
+          <option value="srl">Società / SRL</option>
+        </select>
+      </div>
+    </div>
+    <div style="background:var(--teal-light);border:1px solid var(--teal-mid);border-radius:8px;padding:12px;font-size:12px;color:var(--teal-dark);margin-bottom:20px;line-height:1.6">
+      ✓ Tutti i dati numerici (fatturato, branche, conto economico) verranno <strong>azzerati</strong>.<br>
+      ✓ I dati di esempio vengono rimossi — parti con una scheda pulita.<br>
+      ✓ Potrai poi importare i dati reali dal tuo CSV contabile.
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" onclick="document.getElementById('nuovo-studio-modal').classList.remove('open')">Annulla</button>
+      <button class="modal-btn confirm" onclick="iniziaNuovoStudio()">✓ Crea nuovo studio</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
